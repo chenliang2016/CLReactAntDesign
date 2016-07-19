@@ -1,0 +1,30 @@
+var http = require('http');
+var queryString = require('querystring');
+exports.sendSms = function(params){
+    var data = queryString.stringify(params);
+    var opt = {
+        method: "POST",
+        hostname: "www.ejb365.com",
+        port: 8080,
+        path: '/api/sms/send.action',
+        headers: {
+            "Content-Type": 'application/x-www-form-urlencoded',
+            "Content-Length": data.length
+        }
+    };
+
+    var req = http.request(opt, function (resPost) {
+        resPost.on('data', function(d) {
+            console.log(d);
+        });
+    });
+
+    req.on('error', function(e) {
+        console.log('problem with request: ' + e.message);
+    });
+
+    req.write(data);
+    req.end();
+
+
+}

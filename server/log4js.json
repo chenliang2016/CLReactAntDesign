@@ -1,0 +1,25 @@
+{
+  "appenders": [
+    {
+      "type": "console",
+      "layout": {
+        "type": "pattern",
+        "pattern": "%d [%-5p] %c - %m"
+      }
+    },
+    {
+      "type": "dateFile",
+      "filename": "logs/access.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "http"
+    },
+    {
+      "type": "dateFile",
+      "filename": "logs/app.log",
+      "pattern": "-yyyy-MM-dd",
+      "alwaysIncludePattern": false,
+      "category": "[default]"
+    }
+  ]
+}
