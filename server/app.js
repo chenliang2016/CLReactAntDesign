@@ -4,6 +4,7 @@
 
 const port = process.env.PORT || '3001';
 const koa = require('koa');
+const convert = require('koa-convert')
 const json = require('koa-json');
 const views = require('koa-views');
 const gzip = require('koa-gzip');
@@ -19,6 +20,9 @@ const routers = require('./routers');
 const logger = require('./log4js');
 
 const app = new koa();
+
+const _use = app.use
+app.use = x => _use.call(app, convert(x))
 
 global.logger = logger;
 
