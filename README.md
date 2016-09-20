@@ -2,7 +2,7 @@
 基于antdesign 前端框架搭建的后端框架
 
 #框架所用的开源架构
-[antdegin](http://ant.design/)0.12.12版本，前端react框架
+[antdegin](http://ant.design/)1.1.0版本，前端react框架
 koa，后端web框架
 
 #前端编译
