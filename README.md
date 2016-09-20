@@ -33,13 +33,13 @@ npm run build
 mac下
 
 ```
-npm run dev
+npm start
 ```
 
 windows下
 
 ```
-node server/app.js
+node server/server.js
 ```
 
 #介绍
@@ -47,4 +47,11 @@ node server/app.js
 框架使用前后端分离的方式，交互通过接口，api的方式
 
 server文件夹下是基于koa的后端api框架
-app文件夹下是用react编写的前端控件，与页面
+src文件夹下是用react编写的前端控件，与页面,最终编译在dist文件夹下
+
+#展示
+登录用户名密码，admin/123
+
+![](img/login.png)
+
+![](img/main.png)
