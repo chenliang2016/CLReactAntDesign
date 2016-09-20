@@ -50,7 +50,7 @@ server文件夹下是基于koa的后端api框架
 src文件夹下是用react编写的前端控件，与页面,最终编译在dist文件夹下
 
 #展示
-登录用户名密码，admin/123
+访问地址 localhost:3000 登录用户名密码，admin/123
 
 ![](img/login.png)
 
