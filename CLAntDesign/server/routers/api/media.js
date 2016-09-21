@@ -29,6 +29,30 @@ router.post('/upload', function* (next){
   };
 });
 
+router.post('/simditorUploadImage', function* (next){
+    var parts = parse(this);
+    var part;
+    var returnpath = "";
+
+    while (part = yield parts) {
+      var stream = fs.createWriteStream(apiConstant.uploadFilePrex+part.filename);
+      returnpath = apiConstant.uploadReturnFilePrex+part.filename;
+      if (part.length) {
+        // arrays are busboy fields
+        // console.log('key: ' + part[0])
+        // console.log('value: ' + part[1])
+      } else {
+        // otherwise, it's a stream
+        part.pipe(stream);
+      }
+    }
+    yield this.body = {
+      "success": true,
+      "msg": "error message",
+      "file_path": returnpath
+    };
+});
+
 router.post('/uploadFiles', function* (next){
 
   // multipart upload

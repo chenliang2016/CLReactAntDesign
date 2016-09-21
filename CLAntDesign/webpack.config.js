@@ -12,6 +12,13 @@ module.exports = function (webpackConfig) {
     style: 'css',  // if true, use less
   }]);
 
+  // 添加jquery插件
+  // webpackConfig.plugins.push(
+  //     new webpack.ProvidePlugin({
+  //       $: 'jquery'
+  //     })
+  // );
+
   // Enable this if you have to support IE8.
   // webpackConfig.module.loaders.unshift({
   //   test: /\.jsx?$/,

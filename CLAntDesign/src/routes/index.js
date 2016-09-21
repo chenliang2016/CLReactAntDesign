@@ -6,6 +6,9 @@ import Users from '../pages/frame/Users';
 import CLFrameMenu from '../pages/frame/FrameMenu';
 import CLFrameRole from '../pages/frame/FrameRole';
 
+import InfoList from '../pages/info/InfoList';
+import InfoAdd from '../pages/info/InfoAdd';
+
 function requireAuth(nextState, replaceState) {
   var islogin =  sessionStorage.getItem('login');
   if(islogin == 'true'){
@@ -22,6 +25,10 @@ const Routes = ({ history }) =>
         <Route breadcrumbName="用户管理" name="users"  path="users" component={Users}/>
         <Route breadcrumbName="菜单管理" name="menu"  path="menu" component={CLFrameMenu}/>
         <Route breadcrumbName="角色管理" name="role"  path="role" component={CLFrameRole}/>
+      </Route>
+      <Route name="info"  breadcrumbName="信息发布" path="info">
+          <Route breadcrumbName="信息列表" name="infoList"  path="infoList" component={InfoList}/>
+          <Route breadcrumbName="信息发布" name="infoAdd"  path="infoAdd" component={InfoAdd}/>
       </Route>
     </Route>
     <Route name="user" path="user">
