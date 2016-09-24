@@ -54,8 +54,7 @@ let CLUploadFiles = React.createClass({
 	      }
 	      return true;
 	    });
-	    // this.setState({ fileList });
-	    this.state.fileList = fileList;
+	    this.setState({ fileList });
 	},
 
     render() {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TreeSelect } from 'antd';
 import {Ajax} from '../libs/common';
-const TreeNode = TreeSelect.TreeNode;
 
 function setLeaf(treeData, curKey, level) {
   const loopLeaf = (data, lev) => {
@@ -39,6 +38,10 @@ function getNewTreeData(treeData, curKey, child, level) {
 
 class CLTreeSelect extends React.Component {
 
+    static defaultProps = {
+        rootKey: '-1',
+    };
+
   constructor(props) {
   	super(props);
     var value = ''
@@ -59,10 +62,10 @@ class CLTreeSelect extends React.Component {
 
   componentDidMount() {
   	var self = this;
-  	var url = self.props.treeUrl;
+    var rootKey = self.props.rootKey;
   	this.setState({
   		treeData: [
-  		{ label: '根目录',value:-1, key: -1 }
+  		{ label: '根目录',value:rootKey, key: rootKey }
   		],
     });
   };
@@ -76,8 +79,7 @@ class CLTreeSelect extends React.Component {
   		var item = treeLoadData[i];
   		var name = item[titleKey];
   		var key  = item[keyKey];
-  		// arr.push({ name: name, key: key });
-      arr.push({ label: name, value: key,key: key });
+        arr.push({ label: name, value: key,key: key });
   	}
   	return arr;
   };
@@ -90,11 +92,7 @@ class CLTreeSelect extends React.Component {
      var treeNodeSelect = this.props.onTreeNodeSelect;
      var treeSelectFormTitle = this.props.treeSelectFormTitle;
      var treeSelectFormValue = this.props.treeSelectFormValue;
-     // if (treeSelectFormTitle == undefined) {
-     //     treeNodeSelect(info);
-     // }else{
-         treeNodeSelect(info,node,treeSelectFormTitle,treeSelectFormValue);
-     // }
+     treeNodeSelect(info,node,treeSelectFormTitle,treeSelectFormValue);
   };
 
   onLoadData = (treeNode)=> {

@@ -29,6 +29,7 @@ const apiRouter = (app) => {
     app.use(api_media.routes(),api_media.allowedMethods());
 
     //业务相关api
+    require('./api/info')(app);
 };
 
 module.exports = (app) => {

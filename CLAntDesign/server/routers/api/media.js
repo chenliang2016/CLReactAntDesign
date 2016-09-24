@@ -19,13 +19,20 @@ router.post('/upload', function* (next){
   while (part = yield parts) {
     // var stream = fs.createWriteStream(path.join(os.tmpdir(), Math.random().toString()));
 	  var stream = fs.createWriteStream(apiConstant.uploadFilePrex+part.filename);
-    returnpath = apiConstant.uploadReturnFilePrex+part.filename;
-    part.pipe(stream);
+      returnpath = apiConstant.uploadReturnFilePrex+part.filename;
+      if (part.length) {
+          // arrays are busboy fields
+          // console.log('key: ' + part[0])
+          // console.log('value: ' + part[1])
+      } else {
+          // otherwise, it's a stream
+          part.pipe(stream);
+      }
   }
 
   yield this.body = {
-       status:"success",
-  	   url:returnpath
+       "status":"success",
+  	   "url":returnpath
   };
 });
 

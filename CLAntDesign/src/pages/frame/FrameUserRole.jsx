@@ -95,7 +95,6 @@ class FrameUserRole extends React.Component{
 
     rowOnChange = (selectedRowKeys, selectedRows) => {
         this.state.formData.roles = `${selectedRowKeys}`;
-        console.log(this.state.formData.roles);
         this.setState({
           defaultkey:selectedRowKeys
         })

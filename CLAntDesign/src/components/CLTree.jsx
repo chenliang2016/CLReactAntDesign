@@ -39,6 +39,10 @@ function getNewTreeData(treeData, curKey, child, level) {
 
 class CLTree extends React.Component {
 
+    static defaultProps = {
+        rootKey: '-1',
+    };
+
     constructor() {
         super();
         this.state = {
@@ -48,10 +52,10 @@ class CLTree extends React.Component {
 
     componentDidMount() {
         var self = this;
-        var url = self.props.treeUrl;
+        const rootKey = self.props.rootKey;
         this.setState({
         treeData: [
-          { name: '根目录', key: '-1' }
+          { name: '根目录', key: rootKey }
         ],
       });
     };

@@ -8,6 +8,7 @@ import CLFrameRole from '../pages/frame/FrameRole';
 
 import InfoList from '../pages/info/InfoList';
 import InfoAdd from '../pages/info/InfoAdd';
+import InfoCategory from '../pages/info/InfoCategory';
 
 function requireAuth(nextState, replaceState) {
   var islogin =  sessionStorage.getItem('login');
@@ -27,6 +28,7 @@ const Routes = ({ history }) =>
         <Route breadcrumbName="角色管理" name="role"  path="role" component={CLFrameRole}/>
       </Route>
       <Route name="info"  breadcrumbName="信息发布" path="info">
+          <Route breadcrumbName="信息类别" name="infoCategory"  path="infoCategory" component={InfoCategory}/>
           <Route breadcrumbName="信息列表" name="infoList"  path="infoList" component={InfoList}/>
           <Route breadcrumbName="信息发布" name="infoAdd"  path="infoAdd" component={InfoAdd}/>
       </Route>

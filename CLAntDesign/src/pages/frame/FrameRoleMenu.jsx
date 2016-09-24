@@ -13,7 +13,6 @@ class FrameRoleMenu extends React.Component{
 
     constructor(props) {
     	super(props);
-      console.log(props);
     	this.originalTreeData = [];
         this.state = {
             loading: false,
@@ -35,7 +34,6 @@ class FrameRoleMenu extends React.Component{
           for(var i = 0 ;i < d.length; i ++){
             defaultkeys.push(d[i].menuId);
           }
-          console.log(defaultkeys);
           self.setState({
             defaultkey:defaultkeys
           })
@@ -98,7 +96,6 @@ class FrameRoleMenu extends React.Component{
     };
 
     rowOnSelect = (record, selected, selectedRows) => {
-      // console.log(selectedRows);
     };
 
     render() {

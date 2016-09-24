@@ -112,14 +112,24 @@ let CLModalForm = React.createClass({
                     var treeSelectFormTitle = item.treeSelectFormTitle;
                     var treeSelectFormValue = item.treeSelectFormValue;
 
+                    var rootKey = item.rootKey;
+
+                    var treeSelectProps = {
+                        value:value,
+                        treeUrl:treeUrl,
+                        treeNode:treeNode,
+                        treeSelectFormTitle:treeSelectFormTitle,
+                        treeSelectFormValue:treeSelectFormValue,
+                        onTreeNodeSelect:this.treeNodeOnSelect
+                    };
+
+                    if (rootKey != undefined){
+                        treeSelectProps.rootKey = rootKey;
+                    }
+
                     return  <FormItem {...formItemLayout} label={title}>
                                 <CLTreeSelect
-                                value = {value}
-                                treeUrl={treeUrl}
-                                treeNode={treeNode}
-                                treeSelectFormTitle={treeSelectFormTitle}
-                                treeSelectFormValue={treeSelectFormValue}
-                                onTreeNodeSelect = {this.treeNodeOnSelect} />
+                                    {...treeSelectProps} />
                             </FormItem>
                }else if(type == "UploadImg"){
                     var defaultFileList = value;
@@ -185,7 +195,7 @@ let CLModalForm = React.createClass({
             <div>
                 <Modal ref="modal" visible={this.props.visible} title={this.state.edit
                     ? '修改'
-                    : '新增'} onOk={this.handleOk} onCancel={this.handleCancel} footer={[< Button key = "back" type = "ghost" size = "large" onClick = {
+                    : '新增'} onOk={this.handleOk} onCancel={this.handleCancel} footer={[<Button key = "back" type = "ghost" size = "large" onClick = {
                         this.handleCancel
                     } > 返 回 </Button>, <Button key="submit" type="primary" size="large" loading={this.state.loading} onClick={this.handleOk}> 提 交 </Button >]}>
                     <Form horizontal>
