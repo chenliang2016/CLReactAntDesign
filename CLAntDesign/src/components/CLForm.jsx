@@ -29,13 +29,13 @@ let CLForm = React.createClass({
     componentWillReceiveProps: function(nextProps) {
         this.setState(nextProps);
     },
-    handleOk() {
+    handleOk(e) {
+        e.preventDefault();
+        var self = this;
         this.props.form.validateFields((errors, values) => {
             if (!!errors) {
-                console.log('Errors in form!!!');
                 return;
             }
-            var self = this;
             self.setState({loading: true});
 
             var updateUrl = this.props.updateUrl;
@@ -45,10 +45,13 @@ let CLForm = React.createClass({
                 ? updateUrl
                 : addUrl, this.state.formData).then((d) => {
                 if (d.success) {
-                    self.setState({loading: false});
-                    self.props.onClose(d);
+                    self.setState({loading: false,formData:{}});
+                    self.props.onSubmitSuccess(d);
                 } else {
-                    self.setState({loading: false});
+                    self.setState({loading: false,formData:{}});
+                    if (self.props.onSubmitError){
+                        self.props.onSubmitError();
+                    }
                 }
             });
         });
@@ -86,18 +89,10 @@ let CLForm = React.createClass({
     },
 
     render() {
-        // const { getFieldProps } = this.props.form;
-        const { form } = this.props;
-
-        console.log(form);
+        const { getFieldProps } = this.props.form;
 
         var formdata = this.state.formData;
-
-        // const inputProps = getFieldProps(arrname, {
-        //     rules: [
-        //         { required: true, message: '请输入' },
-        //     ],
-        // });
+        var self = this;
 
         const loopFormItems = data => data.map((item) => {
 
@@ -109,17 +104,33 @@ let CLForm = React.createClass({
             var require = item.require;
 
             if (type == "Input") {
-                // if (require){
-                //     return <div className={styles.formItemContainer}>
-                //         <div className={styles.formItemTitle}>{title}</div>
-                //         <Input {...inputProps} placeholder={placeholder} size="large" name={arrname} value={value} onChange={this.setValue.bind(this, arrname)} />
-                //     </div>;
-                // }else{
+                if (require){
+                    let onInputChange = (e)=>{
+                        self.state.formData[arrname] = e.target.value;
+                    };
+                    const inputProps = getFieldProps(arrname, {
+                        rules: [
+                            { required: true ,message: '请输入'+item.title},
+                        ],
+                        onChange:onInputChange,
+                        initialValue:value
+                    });
                     return <div className={styles.formItemContainer}>
                         <div className={styles.formItemTitle}>{title}</div>
-                        <Input placeholder={placeholder} size="large" name={arrname} value={value} onChange={this.setValue.bind(this, arrname)} />
+                        <FormItem
+                            hasFeedback
+                        >
+                        <Input {...inputProps} placeholder={placeholder} size="large" name={arrname}  value={value} />
+                        </FormItem>
                     </div>;
-                // }
+                }else{
+                    return <div className={styles.formItemContainer}>
+                        <div className={styles.formItemTitle}>{title}</div>
+                            <FormItem>
+                                <Input placeholder={placeholder} size="large" name={arrname} value={value} onChange={this.setValue.bind(this, arrname)} />
+                            </FormItem>
+                    </div>;
+                }
             }else if(type == "TreeSelect"){
                 var treeUrl = item.treeUrl;
                 var treeNode = item.treeNode;
@@ -222,5 +233,7 @@ let CLForm = React.createClass({
         );
     }
 });
+
+CLForm = createForm()(CLForm);
 
 export default CLForm;

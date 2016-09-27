@@ -29,23 +29,31 @@ let CLModalForm = React.createClass({
     componentWillReceiveProps: function(nextProps) {
         this.setState(nextProps);
     },
-    handleOk() {
-        this.setState({loading: true});
+    handleOk(e) {
+        e.preventDefault();
         var self = this;
-
-        var updateUrl = this.props.updateUrl;
-        var addUrl = this.props.addUrl;
-
-        Ajax.post(this.state.edit
-            ? updateUrl
-            : addUrl, this.state.formData).then((d) => {
-            if (d.success) {
-                self.setState({loading: false});
-                self.props.onClose(d);
-            } else {
-                self.setState({loading: false});
+        this.props.form.validateFields((errors, values) => {
+            if (!!errors) {
+                return;
             }
+
+            self.setState({loading: true});
+
+            var updateUrl = this.props.updateUrl;
+            var addUrl = this.props.addUrl;
+
+            Ajax.post(this.state.edit
+                ? updateUrl
+                : addUrl, this.state.formData).then((d) => {
+                if (d.success) {
+                    self.setState({loading: false});
+                    self.props.onClose(d);
+                } else {
+                    self.setState({loading: false});
+                }
+            });
         });
+
     },
     handleCancel() {
         this.props.onClose();
@@ -77,7 +85,17 @@ let CLModalForm = React.createClass({
         this.state.formData[formitem] = urls;
     },
 
+    checkInput(rule, value, callback) {
+        const { validateFields } = this.props.form;
+        if (value) {
+            validateFields(['name'], { force: true });
+        }
+        callback();
+    },
+
     render() {
+        const { getFieldProps, getFieldError, isFieldValidating } = this.props.form;
+
         const formItemLayout = {
             labelCol: {
                 span: 7
@@ -89,10 +107,7 @@ let CLModalForm = React.createClass({
 
         var formdata = this.state.formData;
 
-        var treeNode = {
-                title: 'categoryName',
-                key: 'shopCategoryId'
-        };
+        var self = this;
 
         const loopFormItems = data => data.map((item) => {
 
@@ -101,11 +116,30 @@ let CLModalForm = React.createClass({
                var arrname = item.arrname;
                var type = item.type;
                var value = formdata[arrname];
+               var require = item.require;
 
                if (type == "Input") {
-                    return <FormItem {...formItemLayout} label={title}>
-                                <Input placeholder={placeholder} name={arrname} value={value} onChange={this.setValue.bind(this, arrname)}/>
-                           </FormItem>;
+                   if (require){
+                       let onInputChange = (e)=>{
+                           self.state.formData[arrname] = e.target.value;
+                       };
+                       const inputProps = getFieldProps(arrname, {
+                           rules: [
+                               { required: true ,message: '请输入'+item.title},
+                           ],
+                           onChange:onInputChange,
+                           initialValue:value,
+                       });
+                       return <FormItem {...formItemLayout} label={title}>
+                           <Input {...inputProps} placeholder={placeholder} name={arrname} value={value}
+                                  />
+                       </FormItem>;
+                   }else {
+                       return <FormItem {...formItemLayout} label={title}>
+                           <Input id={arrname} placeholder={placeholder} name={arrname} value={value}
+                                  onChange={this.setValue.bind(this, arrname)}/>
+                       </FormItem>;
+                   }
                }else if(type == "TreeSelect"){
                     var treeUrl = item.treeUrl;
                     var treeNode = item.treeNode;
@@ -206,5 +240,7 @@ let CLModalForm = React.createClass({
         );
     }
 });
+
+CLModalForm = createForm()(CLModalForm);
 
 export default CLModalForm;

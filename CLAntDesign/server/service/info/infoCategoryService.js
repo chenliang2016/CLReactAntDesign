@@ -1,8 +1,8 @@
 var p = require('../../database/mysqlUtil');
 
-var infoService = {};
+var infoCategoryService = {};
 
-infoService.getInfoCategoryPage = function * (pCategoryId,page,size){
+infoCategoryService.getInfoCategoryPage = function * (pCategoryId,page,size){
     var sqlString = `select * from finfocategory where  1=1 `;
     if (pCategoryId != undefined && pCategoryId != '') {
         sqlString += ` and pCategoryId = ${pCategoryId} `;
@@ -21,7 +21,7 @@ infoService.getInfoCategoryPage = function * (pCategoryId,page,size){
     return rows;
 }
 
-infoService.getInfoCategorysCount = function * (pCategoryId){
+infoCategoryService.getInfoCategorysCount = function * (pCategoryId){
     var sqlString = `select count(1) as cnt from finfocategory where  1=1 `;
     if (pCategoryId != undefined && pCategoryId != '') {
         sqlString += ` and pCategoryId = ${pCategoryId} `;
@@ -31,7 +31,7 @@ infoService.getInfoCategorysCount = function * (pCategoryId){
     return count[0].cnt;
 }
 
-infoService.getInfoCategoryByPid = function * (pCategoryId){
+infoCategoryService.getInfoCategoryByPid = function * (pCategoryId){
     var sqlString = `select * from finfocategory where  1=1 `;
     if (pCategoryId != undefined && pCategoryId != '') {
         sqlString += ` and pCategoryId=${pCategoryId} `;
@@ -40,25 +40,25 @@ infoService.getInfoCategoryByPid = function * (pCategoryId){
     return rows;
 }
 
-infoService.getAllCategory = function * (){
+infoCategoryService.getAllCategory = function * (){
     var sqlString = `select * from finfocategory where  1=1 order by orderNum`;
     var rows = yield p.query(sqlString);
     return rows;
 }
 
-infoService.delete = function * (categoryId){
+infoCategoryService.delete = function * (categoryId){
     yield p.query(`delete from finfocategory where  categoryId = ${categoryId} `);
 }
 
-infoService.addNew = function * (data){
+infoCategoryService.addNew = function * (data){
     var sqlString = `insert into finfocategory (categoryName,orderNum,pCategoryId) 
 		value("${data.categoryName}",${data.orderNum},${data.pCategoryId})`;
     yield p.query(sqlString);
 }
 
-infoService.update = function * (data){
+infoCategoryService.update = function * (data){
     yield p.query(`update finfocategory set categoryName = "${data.categoryName}",
 		orderNum = ${data.orderNum}, pCategoryId = ${data.pCategoryId} `);
 }
 
-module.exports = infoService;
+module.exports = infoCategoryService;

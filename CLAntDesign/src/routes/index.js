@@ -30,7 +30,7 @@ const Routes = ({ history }) =>
       <Route name="info"  breadcrumbName="信息发布" path="info">
           <Route breadcrumbName="信息类别" name="infoCategory"  path="infoCategory" component={InfoCategory}/>
           <Route breadcrumbName="信息列表" name="infoList"  path="infoList" component={InfoList}/>
-          <Route breadcrumbName="信息发布" name="infoAdd"  path="infoAdd" component={InfoAdd}/>
+          <Route breadcrumbName="信息发布" name="infoAdd"  path="infoAdd(/:id)" component={InfoAdd}/>
       </Route>
     </Route>
     <Route name="user" path="user">

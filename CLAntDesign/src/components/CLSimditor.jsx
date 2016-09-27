@@ -5,6 +5,13 @@ require('simditor/styles/simditor.css');
 
 class CLSimditor extends React.Component{
 
+    componentWillReceiveProps(nextProps){
+        this.setState(nextProps);
+        if (nextProps.value!=undefined){
+            this.editor.setValue(nextProps.value);
+        }
+    }
+
     componentDidMount() {
         this.initEditor();
     }

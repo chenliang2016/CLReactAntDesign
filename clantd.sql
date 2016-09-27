@@ -1,23 +1,67 @@
-/*
-Navicat MySQL Data Transfer
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4541
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 115.29.232.189 (MySQL 5.5.43-log)
+# Database: clantd
+# Generation Time: 2016-09-27 06:26:27 +0000
+# ************************************************************
 
-Source Server         : 115.29.232.189
-Source Server Version : 50543
-Source Host           : 115.29.232.189:3306
-Source Database       : clantd
 
-Target Server Type    : MYSQL
-Target Server Version : 50543
-File Encoding         : 65001
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-Date: 2016-07-19 14:14:54
-*/
 
-SET FOREIGN_KEY_CHECKS=0;
--- ----------------------------
--- Table structure for `fmenu`
--- ----------------------------
+# Dump of table finfo
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `finfo`;
+
+CREATE TABLE `finfo` (
+  `infoId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `createDate` datetime DEFAULT NULL,
+  `updateDate` datetime DEFAULT NULL,
+  `categoryName` varchar(100) DEFAULT NULL,
+  `topic` varchar(100) DEFAULT NULL,
+  `content` text,
+  `url` varchar(500) DEFAULT NULL,
+  `headImage` varchar(100) DEFAULT NULL,
+  `infoDes` varchar(100) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `categoryId` int(20) DEFAULT NULL,
+  PRIMARY KEY (`infoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+# Dump of table finfocategory
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `finfocategory`;
+
+CREATE TABLE `finfocategory` (
+  `categoryId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(20) DEFAULT NULL,
+  `orderNum` int(20) DEFAULT NULL,
+  `pCategoryId` int(20) DEFAULT NULL,
+  PRIMARY KEY (`categoryId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table fmenu
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `fmenu`;
+
 CREATE TABLE `fmenu` (
   `menuId` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -26,74 +70,135 @@ CREATE TABLE `fmenu` (
   `orderNum` int(20) DEFAULT NULL,
   `tourl` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`menuId`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of fmenu
--- ----------------------------
-INSERT INTO `fmenu` VALUES ('3', '后台管理', 'backend', '-1', '2000', '/backend/users');
-INSERT INTO `fmenu` VALUES ('4', '用户管理', 'users', '3', '2001', '/backend/users');
-INSERT INTO `fmenu` VALUES ('5', '菜单管理', 'menu', '3', '2002', '/backend/menu');
-INSERT INTO `fmenu` VALUES ('21', '角色管理', 'role', '3', '2003', '/backend/role');
+LOCK TABLES `fmenu` WRITE;
+/*!40000 ALTER TABLE `fmenu` DISABLE KEYS */;
 
--- ----------------------------
--- Table structure for `frole`
--- ----------------------------
+INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`)
+VALUES
+	(3,'后台管理','backend',-1,2000,'/backend/users'),
+	(4,'用户管理','users',3,2001,'/backend/users'),
+	(5,'菜单管理','menu',3,2002,'/backend/menu'),
+	(21,'角色管理','role',3,2003,'/backend/role'),
+	(22,'信息管理','info',-1,1000,'/info/infoList'),
+	(23,'信息发布','infoAdd',22,1001,'/info/infoAdd'),
+	(24,'信息列表','infoList',22,1002,'/info/infoList'),
+	(25,'信息类别','infoCategory',22,1000,'/info/infoCategory');
+
+/*!40000 ALTER TABLE `fmenu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table frole
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `frole`;
+
 CREATE TABLE `frole` (
   `roleId` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `proleId` int(20) DEFAULT NULL,
   PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of frole
--- ----------------------------
+LOCK TABLES `frole` WRITE;
+/*!40000 ALTER TABLE `frole` DISABLE KEYS */;
 
--- ----------------------------
--- Table structure for `frolemenu`
--- ----------------------------
+INSERT INTO `frole` (`roleId`, `name`, `proleId`)
+VALUES
+	(1,'系统管理',-1);
+
+/*!40000 ALTER TABLE `frole` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table frolemenu
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `frolemenu`;
+
 CREATE TABLE `frolemenu` (
   `roleMenuId` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `menuId` int(20) DEFAULT NULL,
   `roleId` int(20) DEFAULT NULL,
   PRIMARY KEY (`roleMenuId`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of frolemenu
--- ----------------------------
+LOCK TABLES `frolemenu` WRITE;
+/*!40000 ALTER TABLE `frolemenu` DISABLE KEYS */;
 
--- ----------------------------
--- Table structure for `fuser`
--- ----------------------------
+INSERT INTO `frolemenu` (`roleMenuId`, `menuId`, `roleId`)
+VALUES
+	(22,4,2),
+	(23,3,2),
+	(24,5,2),
+	(25,21,2),
+	(33,4,1),
+	(34,3,1),
+	(35,5,1),
+	(36,21,1),
+	(37,22,1),
+	(38,23,1),
+	(39,24,1),
+	(40,25,1);
+
+/*!40000 ALTER TABLE `frolemenu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table fuser
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `fuser`;
+
 CREATE TABLE `fuser` (
   `userId` int(20) NOT NULL AUTO_INCREMENT,
   `loginName` varchar(50) DEFAULT NULL,
   `loginPasw` varchar(50) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of fuser
--- ----------------------------
-INSERT INTO `fuser` VALUES ('1', 'admin', '123', '管理员');
+LOCK TABLES `fuser` WRITE;
+/*!40000 ALTER TABLE `fuser` DISABLE KEYS */;
 
--- ----------------------------
--- Table structure for `fuserrole`
--- ----------------------------
+INSERT INTO `fuser` (`userId`, `loginName`, `loginPasw`, `name`)
+VALUES
+	(1,'admin','123','管理员');
+
+/*!40000 ALTER TABLE `fuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table fuserrole
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `fuserrole`;
+
 CREATE TABLE `fuserrole` (
   `userRoleId` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `roleId` int(20) DEFAULT NULL,
   `userId` int(20) DEFAULT NULL,
   PRIMARY KEY (`userRoleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of fuserrole
--- ----------------------------
+LOCK TABLES `fuserrole` WRITE;
+/*!40000 ALTER TABLE `fuserrole` DISABLE KEYS */;
+
+INSERT INTO `fuserrole` (`userRoleId`, `roleId`, `userId`)
+VALUES
+	(21,2,2),
+	(22,1,1);
+
+/*!40000 ALTER TABLE `fuserrole` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

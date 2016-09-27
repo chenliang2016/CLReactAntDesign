@@ -117,17 +117,20 @@ class Users extends React.Component {
         {
             type:"Input",
             title:"用户名称",
-            arrname:"name"
+            arrname:"name",
+            require:true,
         },
         {
             type:"Input",
             title:"用户登录名",
-            arrname:"loginName"
+            arrname:"loginName",
+            require:true,
         },
         {
             type:"Input",
             title:"登录密码",
-            arrname:"loginPasw"
+            arrname:"loginPasw",
+            require:true,
         }
         ];
 
