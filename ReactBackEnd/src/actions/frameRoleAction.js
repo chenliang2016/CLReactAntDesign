@@ -5,7 +5,7 @@ import fetchUtil from '../libs/fetchUtil';
 import { replace } from 'react-router-redux'
 import {setTableNormal,setTableLoading,setTableDataSource} from './common/tableAction'
 
-import {ROLE_MENU_ALL,ROLE_MENU_FORM_SHOW,ROLE_MENU_FORM_HIDE,ROLE_MENU_FORM_LOADING} from './actionType'
+import {ROLE_MENU_ALL,ROLE_MENU_FORM_SHOW,ROLE_MENU_FORM_HIDE,ROLE_MENU_FORM_LOADING,ROLE_LIST} from './actionType'
 
 const RoleMenuFormLoadingAction = (state) => {
     return {
@@ -56,7 +56,7 @@ export const getRoleList = (page,proleId) => {
         }
         fetchUtil.get(url)
             .then((rs)=>{
-                dispatch(setTableDataSource(rs.count,rs.rows));
+                dispatch(setTableDataSource(ROLE_LIST,rs.count,rs.rows));
                 dispatch(setTableNormal())
             },e =>{
                 dispatch(replace('/user/login'));

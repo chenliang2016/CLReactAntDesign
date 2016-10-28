@@ -13,7 +13,10 @@ const initState = {
 export default (state=initState , action) =>{
     switch (action.type) {
         case ROLE_LIST:
-            return Object.assign({},state,action.payload);
+            return Object.assign({},state,{
+                rolelist:action.payload.dataSource,
+                total:action.payload.total,
+            });
         case ROLE_MENU_FORM_SHOW:
             return Object.assign({},state,action.payload);
         case ROLE_MENU_FORM_HIDE:

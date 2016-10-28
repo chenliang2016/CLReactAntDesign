@@ -7,7 +7,7 @@
 #
 # Host: 115.29.232.189 (MySQL 5.5.43-log)
 # Database: clantd
-# Generation Time: 2016-09-27 06:26:27 +0000
+# Generation Time: 2016-10-28 06:27:46 +0000
 # ************************************************************
 
 
@@ -77,14 +77,13 @@ LOCK TABLES `fmenu` WRITE;
 
 INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`)
 VALUES
-	(3,'后台管理','backend',-1,2000,'/backend/users'),
-	(4,'用户管理','users',3,2001,'/backend/users'),
-	(5,'菜单管理','menu',3,2002,'/backend/menu'),
-	(21,'角色管理','role',3,2003,'/backend/role'),
-	(22,'信息管理','info',-1,1000,'/info/infoList'),
-	(23,'信息发布','infoAdd',22,1001,'/info/infoAdd'),
-	(24,'信息列表','infoList',22,1002,'/info/infoList'),
-	(25,'信息类别','infoCategory',22,1000,'/info/infoCategory');
+	(1,'后台管理','backend',-1,2000,'/backend/users'),
+	(2,'用户管理','users',1,2001,'/backend/users'),
+	(3,'菜单管理','menu',1,2002,'/backend/menu'),
+	(4,'角色管理','role',1,2003,'/backend/role'),
+	(5,'信息管理','info',-1,1000,'/info/infoList'),
+	(6,'信息列表','infoList',5,1002,'/info/infoList'),
+	(7,'信息类别','infoCategory',5,1000,'/info/infoCategory');
 
 /*!40000 ALTER TABLE `fmenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -107,7 +106,8 @@ LOCK TABLES `frole` WRITE;
 
 INSERT INTO `frole` (`roleId`, `name`, `proleId`)
 VALUES
-	(1,'系统管理',-1);
+	(1,'系统管理',-1),
+	(5,'信息管理员',-1);
 
 /*!40000 ALTER TABLE `frole` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -130,18 +130,9 @@ LOCK TABLES `frolemenu` WRITE;
 
 INSERT INTO `frolemenu` (`roleMenuId`, `menuId`, `roleId`)
 VALUES
-	(22,4,2),
-	(23,3,2),
-	(24,5,2),
-	(25,21,2),
-	(33,4,1),
-	(34,3,1),
-	(35,5,1),
-	(36,21,1),
-	(37,22,1),
-	(38,23,1),
-	(39,24,1),
-	(40,25,1);
+	(54,5,5),
+	(55,7,5),
+	(56,6,5);
 
 /*!40000 ALTER TABLE `frolemenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -165,7 +156,8 @@ LOCK TABLES `fuser` WRITE;
 
 INSERT INTO `fuser` (`userId`, `loginName`, `loginPasw`, `name`)
 VALUES
-	(1,'admin','123','管理员');
+	(1,'admin','123','管理员'),
+	(17,'xxy1','123','信息员1');
 
 /*!40000 ALTER TABLE `fuser` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -188,8 +180,7 @@ LOCK TABLES `fuserrole` WRITE;
 
 INSERT INTO `fuserrole` (`userRoleId`, `roleId`, `userId`)
 VALUES
-	(21,2,2),
-	(22,1,1);
+	(40,5,17);
 
 /*!40000 ALTER TABLE `fuserrole` ENABLE KEYS */;
 UNLOCK TABLES;
