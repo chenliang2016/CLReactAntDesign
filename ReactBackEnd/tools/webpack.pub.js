@@ -77,9 +77,7 @@ var prodConfig = {
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
-                    "url-loader?limit=1000&name=img/[name]" + configWebpack.hash + ".[ext]",
-                    // 压缩png图片
-                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+                    "url-loader?limit=1000&name=img/[name]" + configWebpack.hash + ".[ext]"
                 ],
                 include: path.resolve(configWebpack.path.src)
             },
