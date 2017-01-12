@@ -5,6 +5,14 @@ const path = require('path'),
       __basename = path.dirname(__dirname),
       __env = process.env.NODE_ENV;
 
+let defaultPath = "//localhost:9000/";
+let cdn = "//localhost:9000/";
+
+if (__env == "__PROD__") {
+     defaultPath = "//admin.1688zdw.com/page/";
+     cdn = "//admin.1688zdw.com/page/";
+}
+
 /**
  * [config basic configuration]
  * @type {Object}
@@ -18,8 +26,8 @@ var config = {
             dev: path.resolve(__basename, "dev"),
             pub: path.resolve(__basename, "pub"),
         },
-        defaultPath: "//localhost:9000/",
-        cdn: "//localhost:8000/",
+        defaultPath: defaultPath,
+        cdn: cdn,
         hash: "[hash:6]",
         chunkhash: "[chunkhash:6]",
         imghash: "",
