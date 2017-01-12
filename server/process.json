@@ -1,0 +1,16 @@
+{
+    "apps": [
+        {
+            "name": "zhende-admin",
+            "script": "server.js",
+            "interpreter_args": "--harmony",
+            "instances": "0",
+            "exec_mode": "cluster",
+            "merge_logs": true,
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "env": {
+                "PORT": 8082
+            }
+        }
+    ]
+}

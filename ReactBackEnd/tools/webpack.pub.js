@@ -28,6 +28,10 @@ var prodConfig = {
                 loader: 'babel',
                 query: {
                     "plugins": [
+                        ["transform-runtime", {
+                            "polyfill": false,
+                            "regenerator": true
+                        }],
                         ["transform-decorators-legacy"],
                         ["transform-react-jsx", { "pragma":"preact.h" }],
                         ["import", { libraryName: "antd", style: "css" }]
@@ -43,8 +47,11 @@ var prodConfig = {
                 test: /\.js$/,
                 loader: 'babel',
                 query: {
-                    // cacheDirectory: './webpack_cache/',
                     plugins: [
+                        ["transform-runtime", {
+                            "polyfill": false,
+                            "regenerator": true
+                        }],
                         ['transform-decorators-legacy'],
                         ["import", { libraryName: "antd", style: "css" }]
                     ],
@@ -77,7 +84,7 @@ var prodConfig = {
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
-                    "url-loader?limit=1000&name=img/[name]" + configWebpack.hash + ".[ext]"
+                    "url-loader?limit=1000&name=img/[name]" + configWebpack.hash + ".[ext]",
                 ],
                 include: path.resolve(configWebpack.path.src)
             },
