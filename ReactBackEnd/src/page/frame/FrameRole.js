@@ -24,7 +24,7 @@ import {formAdd, formEdit, formHide} from '../../actions/common/formAction'
 @connect(
     state => ({
         loading: state.table.loading,
-        dataSource: state.role.dataSource,
+        dataSource: state.role.rolelist,
         total: state.role.total,
         formVisible: state.form.visible,
         formedit: state.form.formedit,
