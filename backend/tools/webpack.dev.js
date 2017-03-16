@@ -21,12 +21,12 @@ var devConfig = {
     },
     module: {
         loaders: [
-            { 
+            {
                 test: /\.js$/,
                 loaders: ['react-hot'],
                 exclude: /node_modules/,
             },
-            { 
+            {
                 test: /\.jsx$/,
                 loader: 'babel',
                 query: {
@@ -46,7 +46,7 @@ var devConfig = {
                 },
                 exclude: /node_modules/,
             },
-            { 
+            {
                 test: /\.js$/,
                 loader: 'babel',
                 query: {
@@ -99,7 +99,7 @@ var devConfig = {
             },
         ],
         noParse: [
-            
+
         ]
     },
     resolve: {

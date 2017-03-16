@@ -9,8 +9,8 @@ let defaultPath = "//localhost:9000/";
 let cdn = "//localhost:9000/";
 
 if (__env == "__PROD__") {
-     defaultPath = "//admin.1688zdw.com/page/";
-     cdn = "//admin.1688zdw.com/page/";
+     defaultPath = "//localhost:9000/page/";
+     cdn = "//localhost:9000/page/";
 }
 
 /**
@@ -34,23 +34,23 @@ var config = {
         contenthash: "[contenthash:6]",
     },
     gulp: {
-        path: { 
+        path: {
             src: path.resolve(__basename, "src"),
             dev: path.resolve(__basename, "dev"),
             pub: path.resolve(__basename, "pub"),
             offline: path.resolve(__basename, "offline"),
         },
     },
-    server: {                    // webpack开发环境服务器配置  
+    server: {                    // webpack开发环境服务器配置
         port: 9000,              // port for local server
-        hostDirectory: "/news/"  // http://host/hostDirectory/
+        hostDirectory: "/"  // http://host/hostDirectory/
     },
 };
 
 // 自动扫描html
 config.webpack.html = utils.getHtmlFile(config.webpack.path.src);
 // 根据约定，自动扫描js entry，约定是src/page/xxx/main.js 或 src/page/xxx/main.jsx
-/** 
+/**
     当前获取结果
     {
         'js/index': [path.join(configWebpack.path.src, "/page/index/main.js")],
