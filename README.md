@@ -9,10 +9,10 @@
 * server:后端koa搭建的服务接口，主要包括，菜单管理，角色管理，用户管理，信息发布。使用前，调整mysql数据库。使用clantd.sql修改数据库。
 * VuxApp：后续会开发的基于Vux开发的移动webapp
 
-#工程运行
+# 工程运行
 进入到ReactBackEnd目录，编译运行前端框架
 
-##安装
+## 安装
 
 安装node依赖
 
@@ -21,7 +21,7 @@ npm install
 
 ```
 
-##开发环境
+## 开发环境
 
 开发使用webpack进行编译，并使用webpack.server启动一个服务器，进行页面的访问，
 
@@ -42,7 +42,7 @@ npm run dev
 
 ```
 
-##生产环境
+## 生产环境
 
 ```
 npm run pub
@@ -53,18 +53,18 @@ npm run pub
 
 生产环境，建议使用ngnix部署，直接配置静态文件目录，放目录下，使用ngnix进行接口转发。解决跨域问题。
 
-#后端工程启动
+# 后端工程启动
 
 后端工程主要提供了一些基础的接口。使用koa来开发。整合token机制。
 
 
-##安装
+## 安装
 
 使用clantd.sql进行数据库的安装，
 
 进入到server文件夹下，
 
-###修改数据库配置文件
+### 修改数据库配置文件
 
 修改serer/database/mysqlUtil.js下的数据库配置文件
 
@@ -74,14 +74,14 @@ npm install
 
 ```
 
-##启动
+## 启动
 
 ```
 npm start
 ```
 
 
-#展示
+# 展示
 访问地址 localhost:9000 登录用户名密码，admin/123
 
 ![](img/login.png)
