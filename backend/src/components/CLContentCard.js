@@ -16,7 +16,7 @@ class CLContentCard extends React.Component {
         const minHeight = this.props.minHeight;
         const mHeight =  parseInt(minHeight);
         return (
-            <div style={{padding:24,height:"100%",backgroundColor: "white",minHeight: mHeight}}>
+            <div style={{padding:24,height:"100%",backgroundColor: "white"}}>
                 <div className={styles.cardtitle}><Icon type={this.props.icon} /> {this.props.title}</div>
                 <div className={styles.carddivier}/>
                 <div>

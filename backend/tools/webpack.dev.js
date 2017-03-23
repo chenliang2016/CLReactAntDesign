@@ -108,15 +108,12 @@ var devConfig = {
         alias: {
             'redux': 'redux/dist/redux',
             'react-redux': 'react-redux/dist/react-redux',
-            'utils': path.join(configWebpack.path.src, '/js/common/utils'),
-            'spin': path.join(configWebpack.path.src, '/js/common/spin'),
-            'spinner': path.join(configWebpack.path.src, '/page/common/components/spinner/'),
-            'net': path.join(configWebpack.path.src, '/js/common/net'),
-            'touch': path.join(configWebpack.path.src, '/page/common/components/touch/index.js'),
-            'touch-p': path.join(configWebpack.path.src, '/page/common/components/touch/index-p.js'),
-            'scroll':path.join(configWebpack.path.src, '/page/common/components/scroll/index.js'),
-            'scroll-p':path.join(configWebpack.path.src, '/page/common/components/scroll/index-p.js'),
-            'pure-render-decorator': path.join(configWebpack.path.src, '/js/common/pure-render-decorator'),
+            'utils': path.join(configWebpack.path.src, '/libs'),
+            'commonActions': path.join(configWebpack.path.src, '/actions'),
+            'components': path.join(configWebpack.path.src, '/components'),
+            'page': path.join(configWebpack.path.src, '/page'),
+            'img': path.join(configWebpack.path.src, '/img'),
+            'layouts': path.join(configWebpack.path.src, '/layouts'),
         }
     },
     plugins: [

@@ -17,9 +17,13 @@ class MainLayout extends Component {
         var menusJson = sessionStorage.getItem('menus');
         var menus = JSON.parse(menusJson);
         var name = sessionStorage.getItem('name');
+        const height =  document.body.clientHeight - 64;
+        const contentHeight = height - 64;
         this.state = {
             menus: menus,
-            name: name
+            name: name,
+            containerHeight:height,
+            contentHeight:contentHeight,
         };
     }
 
@@ -80,8 +84,8 @@ class MainLayout extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span={4}>
+                <Row  style={{height:this.state.containerHeight}}>
+                    <Col span={4} style={{height:this.state.containerHeight,overflowY:"auto"}}>
                         <div className={styles.sider}>
                             <Menu mode="inline" theme="dark"
                                   defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{fontSize: 15}}>
@@ -93,7 +97,7 @@ class MainLayout extends Component {
                         <div>
                             <div>
                                 <div>
-                                    <div style={{minHeight: 700}}>
+                                    <div style={{height: this.state.contentHeight,overflow:"auto"}}>
                                         {this.props.children || '首页'}
                                     </div>
                                 </div>
