@@ -5,12 +5,11 @@
 * 附带使用koa实现的后端接口
 
 # 目录介绍
-* ReactBackEnd:基于AntDesign使用的后端SPA。
+* backend:基于AntDesign使用的后端SPA。
 * server:后端koa搭建的服务接口，主要包括，菜单管理，角色管理，用户管理，信息发布。使用前，调整mysql数据库。使用clantd.sql修改数据库。
-* VuxApp：后续会开发的基于Vux开发的移动webapp
 
 # 工程运行
-进入到ReactBackEnd目录，编译运行前端框架
+进入到backend目录，编译运行前端框架
 
 ## 安装
 
@@ -25,7 +24,7 @@ npm install
 
 开发使用webpack进行编译，并使用webpack.server启动一个服务器，进行页面的访问，
 
-使用前，配置webpack.server，修改接口的转发。主要是调整端口
+使用前，配置webpack.server，修改接口的转发。主要是调整端口，如果接口端口不冲突，不需要调整。
 
 ![](img/webpackserverconfig.png)
 
@@ -55,7 +54,7 @@ npm run pub
 
 # 后端工程启动
 
-后端工程主要提供了一些基础的接口。使用koa来开发。整合token机制。
+后端工程主要提供了一些基础的接口。使用koa来开发。利用JWT整合token机制。
 
 
 ## 安装
@@ -66,9 +65,12 @@ npm run pub
 
 ### 修改数据库配置文件
 
-修改serer/database/mysqlUtil.js下的数据库配置文件
+修改serer/config/config.js下的数据库配置文件
+
+![](img/database.png)
 
 安装依赖
+
 ```
 npm install
 
@@ -76,8 +78,10 @@ npm install
 
 ## 启动
 
+
 ```
 npm start
+
 ```
 
 
