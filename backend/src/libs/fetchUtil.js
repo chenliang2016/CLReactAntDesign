@@ -72,4 +72,20 @@ fetchUtil.get = async (url) => {
     }
 };
 
+fetchUtil.requestZhenDe = (apiUrl,params,method) => {
+		let data = {
+			url:apiUrl,
+			params:params
+		}
+
+        let requestUrl = "";
+        if (method == "get"){
+            requestUrl = "/api/zhende/common/get";
+        }else if (method == "post"){
+            requestUrl = "/api/zhende/common/post";
+        }
+
+		return fetchUtil.post(requestUrl,data)
+}
+
 export default fetchUtil;

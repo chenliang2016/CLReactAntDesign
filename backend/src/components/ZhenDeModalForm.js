@@ -25,7 +25,7 @@ import {
     constant
 } from '../libs/constant';
 
-class CLModalForm extends React.Component {
+class ZhenDeModalForm extends React.Component {
     static defaultProps = {
         visible: false,
         onClose: function() {},
@@ -84,24 +84,31 @@ class CLModalForm extends React.Component {
               })
             }
 
-            fetchUtil.post(this.state.edit ? updateUrl : addUrl, formData)
-                .then((rs) => {
-                    if (rs.success) {
+            let apiUrl = this.state.edit ? updateUrl : addUrl;
+
+            let data = {
+                url:apiUrl,
+                params:formData
+            }
+
+		    fetchUtil.post('/api/zhende/common/post',data)
+			.then((rs) => {
+                 if (rs.success) {
                         self.setState({
                             loading: false
                         });
                         resetFields();
                         self.props.onClose(rs);
-                    } else {
+                } else {
                         self.setState({
                             loading: false
                         });
-                    }
-                }, e => {
-                    self.setState({
+                }
+			}, e => {
+				self.setState({
                         loading: false
                     });
-                });
+			});
         });
 
     };
@@ -329,6 +336,6 @@ class CLModalForm extends React.Component {
     }
 }
 
-CLModalForm = createForm()(CLModalForm);
+ZhenDeModalForm = createForm()(ZhenDeModalForm);
 
-export default CLModalForm;
+export default ZhenDeModalForm;

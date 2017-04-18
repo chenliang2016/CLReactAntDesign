@@ -1,87 +1,75 @@
-
 var Router = require('koa-router');
-var router = new Router({prefix: '/api/media'});
+var router = new Router({
+  prefix: '/api/media'
+});
 
 var parse = require('co-busboy');
 var os = require('os');
 var path = require('path');
 var fs = require('fs');
 
-var apiConstant = require('../../model/apiConstant')
+var config = require('../../config/config')
 
-router.post('/upload', function* (next){
+router.post('/upload', function*(next) {
+    let files = this.request.body.files;
+    let returnpath = "";
 
-  // multipart upload
-  var parts = parse(this);
-  var part;
-  var returnpath = "";
-
-  while (part = yield parts) {
-    // var stream = fs.createWriteStream(path.join(os.tmpdir(), Math.random().toString()));
-	  var stream = fs.createWriteStream(apiConstant.uploadFilePrex+part.filename);
-      returnpath = apiConstant.uploadReturnFilePrex+part.filename;
-      if (part.length) {
-          // arrays are busboy fields
-          // console.log('key: ' + part[0])
-          // console.log('value: ' + part[1])
-      } else {
-          // otherwise, it's a stream
-          part.pipe(stream);
-      }
-  }
-
-  yield this.body = {
-       "status":"success",
-  	   "url":returnpath
-  };
-});
-
-router.post('/simditorUploadImage', function* (next){
-    var parts = parse(this);
-    var part;
-    var returnpath = "";
-
-    while (part = yield parts) {
-      var stream = fs.createWriteStream(apiConstant.uploadFilePrex+part.filename);
-      returnpath = apiConstant.uploadReturnFilePrex+part.filename;
-      if (part.length) {
-        // arrays are busboy fields
-        // console.log('key: ' + part[0])
-        // console.log('value: ' + part[1])
-      } else {
-        // otherwise, it's a stream
-        part.pipe(stream);
-      }
+    if (files) {
+        Object.keys(files).forEach(key => {
+            let file = files[key];
+            let path = file.path;
+            returnpath = config.upload.downloadFilePrex + path.replace(config.upload.localFilePrex, '').replace(/\\/g, '/');
+        });
     }
     yield this.body = {
+      "status": "success",
+      "url": returnpath
+    };
+});
+
+router.post('/simditorUploadImage', function*(next) {
+    let files = this.request.body.files;
+    let returnpath = "";
+
+    if (files) {
+        Object.keys(files).forEach(key => {
+            let file = files[key];
+            let path = file.path;
+            returnpath = config.upload.downloadFilePrex + path.replace(config.upload.localFilePrex, '').replace(/\\/g, '/');
+        });
+    }
+
+    yield this.body = {
       "success": true,
-      "msg": "error message",
+      "msg": "",
       "file_path": returnpath
     };
 });
 
-router.post('/uploadFiles', function* (next){
+router.post('/uploadFiles', function*(next) {
 
-  // multipart upload
-  var parts = parse(this);
-  var part;
-  var returnpath = "";
+    let files = this.request.body.files;
+    let returnpath = "";
 
-  while (part = yield parts) {
-    // var stream = fs.createWriteStream(path.join(os.tmpdir(), Math.random().toString()));
-    var stream = fs.createWriteStream(apiConstant.uploadFilePrex+part.filename);
-    if (returnpath=="") {
-        returnpath+=apiConstant.uploadReturnFilePrex+part.filename;
-    }else{
-        returnpath += ";"+apiConstant.uploadReturnFilePrex+part.filename;
+    if (files) {
+        Object.keys(files).forEach(key => {
+            let file = files[key];
+            let path = file.path;
+
+            let fileUrl = config.upload.downloadFilePrex + path.replace(config.upload.localFilePrex, '').replace(/\\/g, '/');
+
+            if (returnpath == "") {
+              returnpath += fileUrl;
+            } else {
+              returnpath += ";" + fileUrl;
+            }
+        });
     }
-    part.pipe(stream);
-  }
 
-  yield this.body = {
-       status:"success",
-       url:returnpath
-  };
+    yield this.body = {
+      status: "success",
+      url: returnpath
+    };
 });
 
 

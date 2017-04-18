@@ -64,7 +64,7 @@ export default (username,password) => {
     return dispatch => {
         dispatch(loginAjaxStartAction());
 
-         fetchUtil.post('/auth/login',{
+         fetchUtil.post('/api/auth/login',{
                         username: username,
                         password: password})
               .then((rs)=>{

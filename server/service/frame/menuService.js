@@ -58,7 +58,7 @@ menuService.addNew = function * (data){
 
 menuService.update = function * (data){
 	yield p.query(`update fmenu set name = "${data.name}",
-		menuKey = "${data.menuKey}", orderNum = ${data.orderNum} , pmenuId = ${data.pmenuId} where menuId = ${data.menuId}`);
+		menuKey = "${data.menuKey}", orderNum = ${data.orderNum} , pmenuId = ${data.pmenuId} , tourl = "${data.tourl}" where menuId = ${data.menuId}`);
 }
 
 module.exports = menuService;

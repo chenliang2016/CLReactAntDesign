@@ -35,7 +35,8 @@ class CLUploadImage extends React.Component{
 
 		if (defaultFileList != undefined) {
 			defaultFileList.split(";").map(function (val, index) {
-				var fileurl =  constant.urlPrex+val;
+				var fileurl =  val;
+				console.log("图片地址"+fileurl);
 				files.push(
 					{
 						uid: index,

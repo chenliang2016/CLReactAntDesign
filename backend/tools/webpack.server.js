@@ -27,7 +27,6 @@ app.use(webpackHotMiddleware(compiler));
 app.use(config.server.hostDirectory, proxy('http://localhost:' + port));
 //后台转发
 app.use('/api/', proxy('http://localhost:8080/api'));
-app.use('/auth/', proxy('http://localhost:8080/auth'));
 
 app.listen(port, function(err) {
 	if (err) {

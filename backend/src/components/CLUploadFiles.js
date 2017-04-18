@@ -35,7 +35,7 @@ class CLUploadFiles extends React.Component{
 
 		if (defaultFileList != undefined) {
 			defaultFileList.split(";").map(function (val, index) {
-				var fileurl =  constant.urlPrex+val;
+				var fileurl =  val;
 				files.push(
 					{
 						uid: index,

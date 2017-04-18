@@ -3,9 +3,10 @@
  */
 
 const Router = require('koa-router');
-const router = new Router({prefix: '/auth'});
+const router = new Router({prefix: '/api/auth'});
 
-const apiConstant = require('../../../model/apiConstant');
+var config = require('../../../config/config');
+var tokenConfig = config.tokenConfig 
 
 var jwt = require('koa-jwt');
 
@@ -33,7 +34,7 @@ router.post('/login', function *(next) {
         loginsuccess = false;
     }
 
-    var token = jwt.sign(user, apiConstant.JWT_SECRET,{expiresIn:apiConstant.JWT_expiresIn});
+    var token = jwt.sign(user, tokenConfig.JWT_SECRET,{expiresIn:tokenConfig.JWT_expiresIn});
 
     yield this.body = {
         success : loginsuccess,
@@ -43,12 +44,6 @@ router.post('/login', function *(next) {
         },
         menus:menus,
     };
-}).get('/menus', function *() {
-    var menus = yield db.Resource.findAll();
-    yield this.body = menus;
-}).get('/current_user', function *() {
-    logger.debug('get current user: %s', JSON.stringify(this.session.user));
-    yield this.body = this.session.user;
-});
+})
 
 module.exports = router;

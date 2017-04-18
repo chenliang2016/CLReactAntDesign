@@ -1,12 +1,14 @@
 var wrapper = require('co-mysql'),
 mysql = require('mysql');
 
+var config = require('../config/config');
+
 var options = {
-    host: '115.29.232.189',
-    user: 'admin',
-    password: '11111',
-    port: '3306',
-    database: 'clantd',
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password,
+    port: config.database.port,
+    database: config.database.database,
 };
 
 var pool = mysql.createPool(options),

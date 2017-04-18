@@ -43,7 +43,7 @@ var config = {
     },
     server: {                    // webpack开发环境服务器配置
         port: 9000,              // port for local server
-        hostDirectory: "/"  // http://host/hostDirectory/
+        hostDirectory: "/page/"  // http://host/hostDirectory/
     },
 };
 

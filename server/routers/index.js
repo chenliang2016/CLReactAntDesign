@@ -6,7 +6,8 @@
  * 页面跳转router
  * @param app
  */
-var apiConstant = require("../model/apiConstant");
+var config = require('../config/config');
+var tokenConfig = config.tokenConfig 
 var jwt = require('koa-jwt');
 
 const appRouter = (app) => {
@@ -32,7 +33,7 @@ const apiRouter = (app) => {
     app.use(api_auth.routes(),api_auth.allowedMethods());
     app.use(api_media.routes(),api_media.allowedMethods());
 
-    app.use(jwt({ secret: apiConstant.JWT_SECRET }));
+    app.use(jwt({ secret: tokenConfig.JWT_SECRET }));
 
     app.use(api_user.routes(),api_user.allowedMethods());
     app.use(api_menu.routes(),api_menu.allowedMethods());
