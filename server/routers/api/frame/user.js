@@ -1,63 +1,63 @@
 var Router = require('koa-router');
-var router = new Router({prefix: '/api/user'});
+var router = new Router();
 
 var p = require('../../../database/mysqlUtil');
 var userService = require('../../../service/frame/userService');
 
-router.get('/list', function* (next) {
-    var q = this.request.query;
-    var rows = yield userService.getUsersPage(q.page,q.size);
-    var count = yield userService.getUsersCount();
+router.get('/list', async (ctx) =>{
+    var q = ctx.query;
+    var rows = await userService.getUsersPage(q.page,q.size);
+    var count = await userService.getUsersCount();
 
-    yield this.body = {"rows":rows,
+    ctx.body = {"rows":rows,
                        "count":count};
 });
 
-router.post('/add', function* (next){
-    var user = this.request.body;
-    yield userService.addNew(user);
-    yield this.body = {
+router.post('/add', async (ctx) =>{
+    var user = ctx.request.body;
+    await userService.addNew(user);
+    ctx.body = {
         success : true,
     };
 });
 
-router.get('/delete', function* (next){
+router.get('/delete', async (ctx) =>{
 
-    var q = this.request.query;
+    var q = ctx.query;
     var userId = q.userId;
 
-    yield userService.delete(userId);
-    yield this.body = {
+    await userService.delete(userId);
+    ctx.body = {
         success : true,
     };
 });
 
-router.post('/update', function* (next){
-    var user = this.request.body;
-    yield userService.update(user);
-    yield this.body = {
+router.post('/update', async (ctx) =>{
+    var user = ctx.request.body;
+    await userService.update(user);
+    ctx.body = {
         success : true,
     };
 });
 
-router.post('/configUserRole', function* (next){
-    var userRoleFormData = this.request.body;
-    yield userService.configUserRole(userRoleFormData);
-    yield this.body = {
+router.post('/configUserRole', async (ctx) =>{
+    var userRoleFormData = ctx.request.body;
+    await userService.configUserRole(userRoleFormData);
+    ctx.body = {
         success : true,
     };
 });
 
-router.get('/getUserRoles', function* (next){
-    var q = this.request.query;
-    var rows =  yield userService.getUserRoles(q.userId);
-    yield this.body = rows;
+router.get('/getUserRoles', async (ctx) =>{
+    var q = ctx.query;
+    var rows =  await userService.getUserRoles(q.userId);
+    ctx.body = rows;
 });
 
-router.get('/getUserMenus', function*(next){
-    var q = this.request.query;
-    var rows =  yield userService.getUserMenus(q.userId);
-    yield this.body = rows;
+router.get('/getUserMenus', async (ctx) =>{
+    var q = ctx.query;
+    var rows =  await userService.getUserMenus(q.userId);
+    ctx.body = rows;
 })
 
 module.exports = router;

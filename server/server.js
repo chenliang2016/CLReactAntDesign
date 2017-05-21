@@ -1,36 +1,30 @@
 // require("babel-core/register");
 // require("babel-polyfill");
 // set babel in entry file
-require('babel-register')({
-  plugins: ['transform-async-to-generator']
-});
+
+'use strict';
+
+const http = require('http');
+const json = require('koa-json');
+const bodyParser = require('koa-bodyparser');
+const staticDir = require('koa-static');
+const body = require('koa-body');
 const convert = require('koa-convert')
-const port = process.env.PORT || '8080'
-const Koa = require('koa');
-const app = new Koa();
 const path = require('path');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 
-const _use = app.use
-app.use = x => _use.call(app, convert(x))
+const port = process.env.PORT || '8080'
+const Koa = require('koa');
+const app = new Koa();
+
+const server = http.createServer(app.callback());
 
 var router = require("./routers");
-
-const json = require('koa-json');
-const views = require('koa-views');
-const bodyParser = require('koa-bodyparser');
-const staticDir = require('koa-static');
-const body = require('koa-body');
 
 const config = require('./config/config')
 
 app.use(json({pretty: false, param: 'pretty'}));
-app.use(views('server/views', {
-    map: {
-        html: 'swig'
-    }
-}));
 
 app.use(staticDir(__dirname + '/../dist'));
 app.use(staticDir(__dirname + '/public'));
@@ -62,5 +56,6 @@ app.use(bodyParser());
 
 router(app);
 
-app.listen(port);
-console.log('Server running');
+server.listen(port, () => {
+    console.log(`app started in ${port}`);
+});

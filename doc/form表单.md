@@ -27,7 +27,9 @@
             title: "选择区域",
             arrname: "area",
             treeUrl: "/api/zhende/area/listByPid",
-            treeSelectFormTitle: "name",//value，跟title同时设置时需要
+            treeSelectFormTitle: "name",//title复值给表单哪个key
+            treeSelectFormValue:"",//value复值给表单哪个key
+            formValueName:"title",//希望使用title作为表单的值
             rootKey:"101",
             treeNode: {
                 title: 'name',
@@ -57,6 +59,25 @@
 
   {
     type: "Select",
+    title: "活动类别",
+    arrname: "activityType",
+    require: true,
+    selectOptions:[
+      {name:"新人大礼包",
+      value:"0",},
+      {name:"周期性活动礼包",
+      value:"1",}
+    ],
+  },
+
+```
+
+下拉选择（多选）
+
+```
+
+  {
+    type: "MutiSelect",
     title: "活动类别",
     arrname: "activityType",
     require: true,

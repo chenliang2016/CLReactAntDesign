@@ -1,50 +1,50 @@
 var Router = require('koa-router');
-var router = new Router({prefix: '/api/infoCategory'});
+var router = new Router();
 
 var infoCategoryService = require('../../../service/info/infoCategoryService');
 
-router.get('/list', function* (next) {
-    var q = this.request.query;
-    var rows = yield infoCategoryService.getInfoCategoryPage(q.pCategoryId,q.page,q.size);
-    var count = yield infoCategoryService.getInfoCategorysCount(q.pCategoryId);
+router.get('/list', async (ctx) => {
+    var q = ctx.query;
+    var rows = await infoCategoryService.getInfoCategoryPage(q.pCategoryId,q.page,q.size);
+    var count = await infoCategoryService.getInfoCategorysCount(q.pCategoryId);
 
-    yield this.body = {"rows":rows,
+    ctx.body = {"rows":rows,
         "count":count};
 });
 
-router.get('/listByPid',function* (next){
-    var q = this.request.query;
-    var rows = yield infoCategoryService.getInfoCategoryByPid(q.pid);
-    yield this.body = rows;
+router.get('/listByPid',async (ctx) =>{
+    var q = ctx.query;
+    var rows = await infoCategoryService.getInfoCategoryByPid(q.pid);
+    ctx.body = rows;
 });
 
-router.get('/allList', function* (next) {
-    var q = this.request.query;
-    var rows = yield infoCategoryService.getAllCategory();
-    yield this.body = rows;
+router.get('/allList', async (ctx) => {
+    var q = ctx.query;
+    var rows = await infoCategoryService.getAllCategory();
+    ctx.body = rows;
 });
 
-router.post('/add', function* (next){
-    var infoC = this.request.body;
-    yield infoCategoryService.addNew(infoC);
-    yield this.body = {
+router.post('/add', async (ctx) =>{
+    var infoC = ctx.request.body;
+    await infoCategoryService.addNew(infoC);
+    ctx.body = {
         success : true,
     };
 });
 
-router.get('/delete', function* (next){
-    var q = this.request.query;
+router.get('/delete', async (ctx) =>{
+    var q = ctx.query;
     var id = q.id;
-    yield infoCategoryService.delete(id);
-    yield this.body = {
+    await infoCategoryService.delete(id);
+    ctx.body = {
         success : true,
     };
 });
 
-router.post('/update', function* (next){
-    var infoc = this.request.body;
-    yield infoCategoryService.update(infoc);
-    yield this.body = {
+router.post('/update', async (ctx) =>{
+    var infoc = ctx.request.body;
+    await infoCategoryService.update(infoc);
+    ctx.body = {
         success : true,
     };
 });

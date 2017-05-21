@@ -1,50 +1,50 @@
 var Router = require('koa-router');
-var router = new Router({prefix: '/api/menu'});
+var router = new Router();
 
 var menuService = require('../../../service/frame/menuService');
 
-router.get('/list', function* (next) {
-    var q = this.request.query;
-    var rows = yield menuService.getMenusPage(q.pmenuId,q.page,q.size);
-    var count = yield menuService.getMenusCount(q.pmenuId);
+router.get('/list', async (ctx) => {
+    var q = ctx.query;
+    var rows = await menuService.getMenusPage(q.pmenuId,q.page,q.size);
+    var count = await menuService.getMenusCount(q.pmenuId);
 
-    yield this.body = {"rows":rows,
+    ctx.body = {"rows":rows,
                        "count":count};
 });
 
-router.get('/listByPid',function* (next){
-    var q = this.request.query;
-    var rows = yield menuService.getMenuByPid(q.pid);
-    yield this.body = rows;
+router.get('/listByPid',async (ctx) => {
+    var q = ctx.query;
+    var rows = await menuService.getMenuByPid(q.pid);
+    ctx.body = rows;
 });
 
-router.get('/allList', function* (next) {
-    var q = this.request.query;
-    var rows = yield menuService.getAllMenu();
-    yield this.body = rows;
+router.get('/allList', async (ctx) =>  {
+    var q = ctx.query;
+    var rows = await menuService.getAllMenu();
+    ctx.body = rows;
 });
 
-router.post('/add', function* (next){
-    var menu = this.request.body;
-    yield menuService.addNew(menu);
-    yield this.body = {
+router.post('/add', async (ctx) => {
+    var menu = ctx.request.body;
+    await menuService.addNew(menu);
+    ctx.body = {
         success : true,
     };
 });
 
-router.get('/delete', function* (next){
-    var q = this.request.query;
+router.get('/delete', async (ctx) => {
+    var q = ctx.query;
     var id = q.id;
-    yield menuService.delete(id);
-    yield this.body = {
+    await menuService.delete(id);
+    ctx.body = {
         success : true,
     };
 });
 
-router.post('/update', function* (next){
-    var menu = this.request.body;
-    yield menuService.update(menu);
-    yield this.body = {
+router.post('/update', async (ctx) => {
+    var menu = ctx.request.body;
+    await menuService.update(menu);
+    ctx.body = {
         success : true,
     };
 });

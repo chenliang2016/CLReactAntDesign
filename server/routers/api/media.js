@@ -1,7 +1,5 @@
 var Router = require('koa-router');
-var router = new Router({
-  prefix: '/api/media'
-});
+var router = new Router();
 
 var parse = require('co-busboy');
 var os = require('os');
@@ -10,8 +8,8 @@ var fs = require('fs');
 
 var config = require('../../config/config')
 
-router.post('/upload', function*(next) {
-    let files = this.request.body.files;
+router.post('/upload', async (ctx) => {
+    let files = ctx.request.body.files;
     let returnpath = "";
 
     if (files) {
@@ -21,14 +19,14 @@ router.post('/upload', function*(next) {
             returnpath = config.upload.downloadFilePrex + path.replace(config.upload.localFilePrex, '').replace(/\\/g, '/');
         });
     }
-    yield this.body = {
+    ctx.body = {
       "status": "success",
       "url": returnpath
     };
 });
 
-router.post('/simditorUploadImage', function*(next) {
-    let files = this.request.body.files;
+router.post('/simditorUploadImage', async (ctx) => {
+    let files = ctx.request.body.files;
     let returnpath = "";
 
     if (files) {
@@ -39,16 +37,16 @@ router.post('/simditorUploadImage', function*(next) {
         });
     }
 
-    yield this.body = {
+    ctx.body = {
       "success": true,
       "msg": "",
       "file_path": returnpath
     };
 });
 
-router.post('/uploadFiles', function*(next) {
+router.post('/uploadFiles', async (ctx) => {
 
-    let files = this.request.body.files;
+    let files = ctx.request.body.files;
     let returnpath = "";
 
     if (files) {
@@ -66,7 +64,7 @@ router.post('/uploadFiles', function*(next) {
         });
     }
 
-    yield this.body = {
+    ctx.body = {
       status: "success",
       url: returnpath
     };

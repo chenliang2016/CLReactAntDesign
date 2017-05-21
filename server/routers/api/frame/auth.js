@@ -3,29 +3,29 @@
  */
 
 const Router = require('koa-router');
-const router = new Router({prefix: '/api/auth'});
+const router = new Router();
 
 var config = require('../../../config/config');
 var tokenConfig = config.tokenConfig 
 
-var jwt = require('koa-jwt');
+var jwt = require('jsonwebtoken');
 
 var userService = require('../../../service/frame/userService');
 var menuService = require('../../../service/frame/menuService');
 
-router.post('/login', function *(next) {
-    const username = this.request.body.username;
-    const password = this.request.body.password;
+router.post('/login', async (ctx) => {
+    const username = ctx.request.body.username;
+    const password = ctx.request.body.password;
     var loginsuccess = false;
-    var user = yield userService.getUserByUserName(username);
+    var user = await userService.getUserByUserName(username);
     var menus = [];
     if (user!=undefined) {
         if(user.loginPasw == password){
             loginsuccess = true;
             if (username=='admin') {
-                menus =  yield menuService.getAllMenu(user.userId);
+                menus =  await menuService.getAllMenu(user.userId);
             }else{
-                menus =  yield userService.getUserMenus(user.userId);
+                menus =  await userService.getUserMenus(user.userId);
             }
         } else {
             loginsuccess = false;
@@ -36,7 +36,7 @@ router.post('/login', function *(next) {
 
     var token = jwt.sign(user, tokenConfig.JWT_SECRET,{expiresIn:tokenConfig.JWT_expiresIn});
 
-    yield this.body = {
+    ctx.body = {
         success : loginsuccess,
         data:{
             token:token,
@@ -45,5 +45,7 @@ router.post('/login', function *(next) {
         menus:menus,
     };
 })
+
+
 
 module.exports = router;
