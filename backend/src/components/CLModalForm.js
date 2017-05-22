@@ -118,14 +118,17 @@ class CLModalForm extends React.Component {
             setFieldsValue
         } = this.props.form;
 
-        const formItemLayout = {
+      const formItemLayout = {
             labelCol: {
-                span: 7
+                xs: { span: 24 },
+                sm: { span: 6 },
             },
             wrapperCol: {
-                span: 12
-            }
+                xs: { span: 24 },
+                sm: { span: 14 },
+            },
         };
+
         const formdata = this.props.formData;
 
 
@@ -182,7 +185,7 @@ class CLModalForm extends React.Component {
               const selectOptions = item.selectOptions;
               if (selectOptions != undefined){
                 const loopOptions = options => options.map((item) => {
-                      const optionvalue = item.value;
+                      const optionvalue =  `${item.value}` ;
                       const optionname = item.name;
                       return <Option key={optionvalue} value={optionvalue}>{optionname}</Option>
                 });
@@ -306,7 +309,7 @@ class CLModalForm extends React.Component {
 
         let nodeformItems;
         if (this.formItems != undefined) {
-            nodeformItems = loopFormItems(this.formItems)
+            nodeformItems = loopFormItems(this.props.formItems)
         }
         return nodeformItems;
     };
