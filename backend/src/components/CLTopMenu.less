@@ -1,21 +1,38 @@
-.menuContainer {
-    background-color: #0083CD;
+.menuContainerNormal {
+    background-color: #f6f6f6;
     height: 48px;
     display: -webkit-flex; /* Safari */
     display: flex;
-    margin-right: 20px;
     align-items:center;
+    padding:15px;
+    cursor:pointer;
+}
+
+.menuContainerFoucs {
+    background-color: #e2edf5;
+    height: 48px;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    align-items:center;
+    padding:15px;
     cursor:pointer;
 }
  
-.menuIcon{
-   width:16px;
-   height: 16px;
-   overflow:hidden;
-   margin-right: 5px;
+ .menuTitleNormal{
+    font-size: 13px;
+    color:#969aa7;
  }
 
- .menuTitle{
-    font-size: 16px;
-    color:white;
+ .menuTitleFoucs{
+    font-size: 13px;
+    color:#0083CD;
  }
+
+
+ .topMenuCotainer{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex:1;
+    align-items:center;
+    flex-direction: row ;
+}

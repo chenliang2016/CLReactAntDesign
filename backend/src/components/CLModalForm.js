@@ -323,7 +323,7 @@ class CLModalForm extends React.Component {
                     : '新增'} onOk={this.handleOk} onCancel={this.handleCancel} footer={[<Button key = "back" type = "ghost" size = "large" onClick = {
                     this.handleCancel
                 } > 返 回 </Button>, <Button key="submit" type="primary" size="large" loading={this.state.loading} onClick={this.handleOk}> 提 交 </Button >]}>
-                    <Form horizontal>
+                    <Form layout="horizontal">
                         { this.nodeformItems }
                     </Form>
                 </Modal>

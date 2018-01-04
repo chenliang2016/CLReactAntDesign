@@ -203,7 +203,7 @@ class CLForm extends React.Component {
 
         return (
             <div>
-                <Form vertical>
+                <Form layout='vertical'>
                     { this.nodeformItems }
                     <FormItem wrapperCol={{span: 16, offset: 6}} style={{marginTop: 24}}>
                         <Button type="primary" htmlType="submit" onClick={this.handleOk}

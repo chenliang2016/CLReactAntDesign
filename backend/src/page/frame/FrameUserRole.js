@@ -61,7 +61,7 @@ class FrameUserRole extends React.Component{
                 onOk={this.handleOk} onCancel={this.handleCancel} footer={[<Button key = "back" type = "ghost" size = "large" onClick = {
                         this.handleCancel
                     } > 返 回 </Button>, <Button key="submit" type="primary" size="large" loading={this.props.roleformloading} onClick={this.handleOk}> 提 交 </Button >]}>
-                    <Form horizontal>
+                    <Form layout="horizontal">
 					      <Table columns={columns}  rowKey= {this.rowKey} rowSelection={rowSelection} dataSource={this.props.treedata} pagination={false} />,
                     </Form>
                 </Modal>
