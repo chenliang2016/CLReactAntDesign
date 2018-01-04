@@ -52,6 +52,10 @@ class CLFrameMenu extends React.Component {
                 dataIndex: 'tourl',
                 key: 'tourl'
             },{
+                title: 'tag',
+                dataIndex: 'tag',
+                key: 'tag'
+            },{
                 title: '操作',
                 key: '操作',
                 render: function(text, record, index) {
@@ -129,6 +133,7 @@ class CLFrameMenu extends React.Component {
     };
 
     render() {
+        const self = this;
         const formItems = [
         {
             type:"TreeSelect",
@@ -157,6 +162,12 @@ class CLFrameMenu extends React.Component {
         },
         {
             type:"Input",
+            title:"tag",
+            arrname:"tag",
+            require:true
+        },
+        {
+            type:"Input",
             title:"跳转url",
             arrname:"tourl",
             require:true
@@ -176,7 +187,7 @@ class CLFrameMenu extends React.Component {
             showTotal:total => `共 ${total} 项`,
             pageSize:10,
             onChange(current) {
-                dispatch(getMenuList(current,this.pmenuId));
+                dispatch(getMenuList(current,self.pmenuId));
             },
         };
 

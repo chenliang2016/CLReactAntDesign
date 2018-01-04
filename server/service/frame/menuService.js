@@ -51,14 +51,17 @@ menuService.delete = async (menuId) => {
 }
 
 menuService.addNew = async (data) => {
-	var sqlString = `insert into fmenu (name,menuKey,tourl,orderNum,pmenuId) 
-		value("${data.name}","${data.menuKey}","${data.tourl}",${data.orderNum},${data.pmenuId})`;
+	var sqlString = `insert into fmenu (name,menuKey,tourl,orderNum,pmenuId,tag) 
+		value("${data.name}","${data.menuKey}","${data.tourl}",${data.orderNum},${data.pmenuId},,"${data.tag}")`;
 	await p.query(sqlString);
 }
 
 menuService.update = async (data) => {
 	await p.query(`update fmenu set name = "${data.name}",
-		menuKey = "${data.menuKey}", orderNum = ${data.orderNum} , pmenuId = ${data.pmenuId} , tourl = "${data.tourl}" where menuId = ${data.menuId}`);
+		menuKey = "${data.menuKey}", orderNum = ${data.orderNum} , 
+		pmenuId = ${data.pmenuId} , 
+		tourl = "${data.tourl}",
+		tag = "${data.tag}" where menuId = ${data.menuId}`);
 }
 
 module.exports = menuService;

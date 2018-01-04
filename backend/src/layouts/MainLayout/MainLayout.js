@@ -1,10 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import styles from './MainLayout.less';
-import LOGO from '../../img/LOGO.jpg';
+import LOGO from '../../img/LOGO.png';
+import shopIcon from 'img/shop.png'
+import activityIcon from 'img/activity.png'
+import orderIcon from 'img/order.png'
+import configIcon from 'img/config.png'
+import userIcon from 'img/user.png'
+import accountIcon from 'img/account.png'
 import head from '../../img/head.png';
 import {replace} from 'react-router-redux'
 import {connect} from 'react-redux'
+
+import CLTopMenu from 'components/CLTopMenu'
 
 import {Menu, Breadcrumb, Icon, Popconfirm, Row, Col} from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -14,17 +22,37 @@ class MainLayout extends Component {
 
     constructor() {
         super();
-        var menusJson = sessionStorage.getItem('menus');
-        var menus = JSON.parse(menusJson);
+        var menus = this.getMenus("normal");
         var name = sessionStorage.getItem('name');
-        const height =  document.body.clientHeight - 64;
-        const contentHeight = height - 64;
+        const height =  document.body.clientHeight - 48;
+        const contentHeight = height - 48;
+        global.contentHeight = contentHeight;
         this.state = {
             menus: menus,
             name: name,
             containerHeight:height,
             contentHeight:contentHeight,
         };
+    }
+
+    getMenus = (tag) => {
+        var menusJson = sessionStorage.getItem('menus');
+        var menus = JSON.parse(menusJson);
+
+        var newMenus = [];
+
+        menus.map((item) => {
+            if (item.tag == tag){
+                newMenus.push(item);
+            }
+        })
+
+        return newMenus;
+    }
+
+    chooseTopMenu = (tag) => {
+        var menus = this.getMenus(tag);
+        this.setState({menus:menus});
     }
 
     confirm = ()=> {
@@ -57,15 +85,43 @@ class MainLayout extends Component {
 
         return (
             <div className={styles.aside}>
-                <Row className={styles.header}>
-                    <Col span={12}>
-                        <div className={styles.headItem}>
-                            <div className={styles.logo}>
-                                <span className={styles.logoItem}><img src={LOGO} className={styles.img}/></span><span
-                                className={styles.logoItem}>后台管理</span>
-                            </div>
-                        </div>
-                    </Col>
+            <Row className={styles.header}>
+            <Col span={4}>
+                <div onClick={() => this.chooseTopMenu("normal")} className={styles.headItem}>
+                    <div className={styles.logo}>
+                        <span className={styles.logoItem}><img src={LOGO} className={styles.img}/></span><span
+                        className={styles.logoItem}>后台管理</span>
+                    </div>
+                </div>
+            </Col>
+            <Col span={16}>
+                <div className={styles.topMenuCotainer}>
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("order")}}
+                    icon={orderIcon} title="订单管理" />
+
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("shop")}}
+                    icon={shopIcon} title="店铺管理" />
+
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("activity")}}
+                    icon={activityIcon} title="运营管理" />
+
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("user")}}
+                    icon={userIcon} title="用户管理" />
+
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("account")}}
+                    icon={accountIcon} title="账号管理" />
+
+                    <CLTopMenu 
+                    onClickMenu = {() => {this.chooseTopMenu("config")}}
+                    icon={configIcon} title="基础配置" />
+
+                </div>
+            </Col>
                     <Col>
                         <div className={styles.headerRight}>
                             <div className={styles.headItem}>
