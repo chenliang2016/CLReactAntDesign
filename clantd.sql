@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 115.29.232.189 (MySQL 5.5.43-log)
-# Database: clantd
-# Generation Time: 2016-10-28 06:27:46 +0000
+# Host: rm-bp1hq2g7279tedkiqo.mysql.rds.aliyuncs.com (MySQL 5.7.18-log)
+# Database: lmm
+# Generation Time: 2018-01-04 03:12:48 +0000
 # ************************************************************
 
 
@@ -69,21 +69,65 @@ CREATE TABLE `fmenu` (
   `pmenuId` int(20) DEFAULT NULL,
   `orderNum` int(20) DEFAULT NULL,
   `tourl` varchar(100) DEFAULT NULL,
+  `tag` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`menuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `fmenu` WRITE;
 /*!40000 ALTER TABLE `fmenu` DISABLE KEYS */;
 
-INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`)
+INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`, `tag`)
 VALUES
-	(1,'后台管理','backend',-1,2000,'/backend/users'),
-	(2,'用户管理','users',1,2001,'/backend/users'),
-	(3,'菜单管理','menu',1,2002,'/backend/menu'),
-	(4,'角色管理','role',1,2003,'/backend/role'),
-	(5,'信息管理','info',-1,1000,'/info/infoList'),
-	(6,'信息列表','infoList',5,1002,'/info/infoList'),
-	(7,'信息类别','infoCategory',5,1000,'/info/infoCategory');
+	(1,'后台管理','backend',-1,2000,'/backend/users','normal'),
+	(2,'用户管理','users',1,2001,'/backend/users','normal'),
+	(3,'菜单管理','menu',1,2002,'/backend/menu','normal'),
+	(4,'角色管理','role',1,2003,'/backend/role','normal'),
+	(5,'信息管理','info',-1,1000,'/info/infoList','normal'),
+	(6,'信息列表','infoList',5,1002,'/info/infoList','normal'),
+	(7,'信息类别','infoCategory',5,1000,'/info/infoCategory','normal'),
+	(8,'账户管理','account',-1,900,'/account/activeAccount','account'),
+	(9,'可提现账户','activeAccount',8,901,'/account/activeAccount','account'),
+	(10,'申请提现','ApplyRecords',8,902,'/account/ApplyRecords','account'),
+	(11,'商户管理','shopmanager',-1,800,'/shopmanager/shopapply','shop'),
+	(12,'商家审核','shopapply',11,801,'/shopmanager/shopapply','shop'),
+	(13,'商户管理','shoplist',11,802,'/shopmanager/shoplist','shop'),
+	(14,'待审核账号','applyRecordMoneyAccountList',8,900,'/account/applyRecordMoneyAccountList','account'),
+	(15,'基础资料','baseconfig',-1,1900,'/baseconfig/ticketlist','config'),
+	(17,'交易信息','moneyinfo',-1,1800,'/moneyinfo/transactionlist','order'),
+	(18,'流水信息','transactionlist',17,1801,'/moneyinfo/transactionlist','order'),
+	(19,'优惠券管理','ticket',-1,700,'/ticket/ticketlist','activity'),
+	(20,'优惠券列表','ticketlist',19,705,'/ticket/ticketlist','activity'),
+	(21,'待审核优惠券','applyTicketList',19,702,'/ticket/applyTicketList','activity'),
+	(22,'活动管理','activitylist',19,700,'/ticket/activitylist','activity'),
+	(26,'商品管理','product',-1,850,'/product/geililist','shop'),
+	(28,'商家类别','shopcategory',15,1901,'/baseconfig/shopcategory',NULL),
+	(29,'商品种类','goodscategory',15,1902,'/baseconfig/goodscategory',NULL),
+	(30,'首页种类','mainpagecategory',15,1903,'/baseconfig/mainpagecategory',NULL),
+	(32,'商品归类','categoryproducts',26,852,'/product/categoryproducts',NULL),
+	(33,'品牌管理','broad',-1,1850,'/broad/broadlist',NULL),
+	(34,'品牌管理','broadlist',33,1851,'/broad/broadlist',NULL),
+	(35,'待审核品牌','applybroad',33,1852,'/broad/applybroad',NULL),
+	(36,'焦点图管理','slide',-1,1700,'/slide/slidelist','config'),
+	(37,'焦点图列表','slidelist',36,1701,'/slide/slidelist',NULL),
+	(38,'城市设置','area',15,1904,'/baseconfig/area',NULL),
+	(39,'验证码','code',-1,1861,'/code/codesearch','config'),
+	(40,'验证码查询','codesearch',39,1962,'/code/codesearch',NULL),
+	(41,'vip管理','vip',-1,500,'/vip/uservip','shop'),
+	(42,'vip套餐管理','uservip',41,501,'/vip/uservip','shop'),
+	(43,'商家套餐设置','shopvip',11,804,'/shopmanager/shopvip','shop'),
+	(49,'系统配置','sysconfig',15,1905,'/baseconfig/sysconfig',NULL),
+	(50,'用户管理','user',-1,1850,'/user/userlimit','user'),
+	(51,'用户已用额度','userlimit',50,1851,'/user/userlimit',NULL),
+	(52,'用户黑名单','userblacklist',50,1852,'/user/userblacklist',NULL),
+	(53,'异常交易','errortrade',17,1802,'/moneyinfo/errortrade',NULL),
+	(54,'账户列表','recordMoneyAccountList',8,900,'/account/recordMoneyAccountList','account'),
+	(55,'提现记录','moneyrecordlist',8,903,'/account/moneyrecordlist',NULL),
+	(56,'订单管理','order',-1,860,'/order/orderlist','order'),
+	(57,'全部订单','orderlist',56,861,'/order/orderlist',NULL),
+	(58,'商家总流水','shoptransactions',17,1801,'/moneyinfo/shoptransactions',NULL),
+	(60,'提现审核（融宝）','ApplyRMAccountListNew',8,902,'/account/ApplyRMAccountListNew',NULL),
+	(61,'商品类别','productCategory',15,1906,'/baseconfig/productCategory',NULL),
+	(63,'商品新增','productAdd',26,853,'/product/productAdd',NULL);
 
 /*!40000 ALTER TABLE `fmenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -106,8 +150,7 @@ LOCK TABLES `frole` WRITE;
 
 INSERT INTO `frole` (`roleId`, `name`, `proleId`)
 VALUES
-	(1,'系统管理',-1),
-	(5,'信息管理员',-1);
+	(7,'系统管理',-1);
 
 /*!40000 ALTER TABLE `frole` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -130,9 +173,64 @@ LOCK TABLES `frolemenu` WRITE;
 
 INSERT INTO `frolemenu` (`roleMenuId`, `menuId`, `roleId`)
 VALUES
-	(54,5,5),
-	(55,7,5),
-	(56,6,5);
+	(217,1,1),
+	(218,2,1),
+	(219,3,1),
+	(220,4,1),
+	(221,5,1),
+	(222,6,1),
+	(223,7,1),
+	(224,8,1),
+	(225,9,1),
+	(226,10,1),
+	(227,11,1),
+	(228,12,1),
+	(229,13,1),
+	(230,14,1),
+	(231,15,1),
+	(232,17,1),
+	(233,18,1),
+	(234,19,1),
+	(235,20,1),
+	(236,21,1),
+	(237,22,1),
+	(238,24,1),
+	(239,25,1),
+	(240,26,1),
+	(241,27,1),
+	(242,28,1),
+	(243,29,1),
+	(244,30,1),
+	(245,31,1),
+	(246,32,1),
+	(247,33,1),
+	(248,34,1),
+	(249,35,1),
+	(250,36,1),
+	(251,37,1),
+	(252,38,1),
+	(253,39,1),
+	(254,40,1),
+	(255,41,1),
+	(256,42,1),
+	(257,43,1),
+	(258,44,1),
+	(259,45,1),
+	(260,46,1),
+	(261,47,1),
+	(262,48,1),
+	(263,49,1),
+	(264,50,1),
+	(265,51,1),
+	(266,52,1),
+	(267,53,1),
+	(268,54,1),
+	(269,55,1),
+	(270,56,1),
+	(271,57,1),
+	(272,58,1),
+	(273,59,1),
+	(274,60,1);
 
 /*!40000 ALTER TABLE `frolemenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -156,8 +254,7 @@ LOCK TABLES `fuser` WRITE;
 
 INSERT INTO `fuser` (`userId`, `loginName`, `loginPasw`, `name`)
 VALUES
-	(1,'admin','123','管理员'),
-	(17,'xxy1','123','信息员1');
+	(1,'admin','123','管理员');
 
 /*!40000 ALTER TABLE `fuser` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -180,7 +277,7 @@ LOCK TABLES `fuserrole` WRITE;
 
 INSERT INTO `fuserrole` (`userRoleId`, `roleId`, `userId`)
 VALUES
-	(40,5,17);
+	(44,1,1);
 
 /*!40000 ALTER TABLE `fuserrole` ENABLE KEYS */;
 UNLOCK TABLES;
