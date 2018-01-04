@@ -52,7 +52,7 @@ menuService.delete = async (menuId) => {
 
 menuService.addNew = async (data) => {
 	var sqlString = `insert into fmenu (name,menuKey,tourl,orderNum,pmenuId,tag) 
-		value("${data.name}","${data.menuKey}","${data.tourl}",${data.orderNum},${data.pmenuId},,"${data.tag}")`;
+		value("${data.name}","${data.menuKey}","${data.tourl}",${data.orderNum},${data.pmenuId},"${data.tag}")`;
 	await p.query(sqlString);
 }
 
