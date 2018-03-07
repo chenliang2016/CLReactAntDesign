@@ -20,8 +20,8 @@ class MainLayout extends Component {
         var menus = this.getMenus("normal");
         var name = sessionStorage.getItem('name');
         const clientHeight = document.body.clientHeight;
-        const height =  document.body.clientHeight - 48;
-        const contentHeight = height - 48;
+        const height =  document.body.clientHeight - 64;
+        const contentHeight = height - 64;
         global.contentHeight = contentHeight;
         this.state = {
             menus: menus,
@@ -69,10 +69,20 @@ class MainLayout extends Component {
 
     renderHeader = () => {
         return <div className={styles.header}>
-                    <CLTopMenus
-                    menus = {this.topmenus}
-                    onClickMenu = {(tag) =>  this.chooseTopMenu(tag)}
-                    />
+                    <div className={styles.headerleft} >
+                        <div className={styles.logo} onClick={() => this.chooseTopMenu("normal")} >
+                            <div className={styles.logoItem}>
+                                <img src={LOGO} className={styles.img}/>
+                            </div>
+                            <div>
+                                <div className={styles.logoText}>后台管理</div>
+                            </div>
+                        </div>
+                        <CLTopMenus
+                            menus = {this.topmenus}
+                            onClickMenu = {(tag) =>  this.chooseTopMenu(tag)}
+                        />
+                    </div>
                     <div className={styles.headerRight}>
                         <div className={styles.headItem}>
                             <img src={head} className={styles.headItemImg}/>
@@ -114,24 +124,11 @@ class MainLayout extends Component {
 
         return (
             <div className={styles.aside}>
-                <Row style={{height:this.state.clientHeight}}>
-                    <Col span={4} style={{height:this.state.clientHeight,overflowY:"auto"}}>
+                {this.renderHeader()}
+                <Row style={{height:this.state.clientHeight-64}}>
+                    <Col span={4} style={{height:this.state.clientHeight-64,overflowY:"auto"}}>
                         <div className={styles.sider}>
-                            <div onClick={() => this.chooseTopMenu("normal")} >
-                                <div className={styles.logo}>
-                                    <div className={styles.logoItem}>
-                                        <img src={LOGO} className={styles.img}/>
-                                    </div>
-                                    <div>
-                                        <div className={styles.logoText}>后台管理</div>
-                                        <div className={styles.logoText2}>添衣汇</div>
-                                    </div>
-                                </div>
-                                <div style={{height:"2px",backgroundColor:"#0c1c45",
-                                marginLeft:"5px",marginRight:"5px"}}>
-                                </div>
-                            </div>
-                            <Menu mode="inline" theme="dark"
+                            <Menu mode="inline" 
                                   defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{fontSize: 15}}>
                                 {menu}
                             </Menu>
@@ -139,7 +136,6 @@ class MainLayout extends Component {
                     </Col>
                     <Col span={20}>
                         <div>
-                            {this.renderHeader()}
                             <div>
                                 <div>
                                     <div style={{height: this.state.contentHeight,overflow:"auto"}}>

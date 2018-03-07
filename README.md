@@ -94,5 +94,3 @@ npm start
 ![](img/login.png)
 
 ![](img/b1.png)
-
-![](img/b2.png)
