@@ -30,7 +30,11 @@ fetchUtil.post = async (url,params) => {
         });
         let data = await response.json();
         if (response.status === 200) {
-            return data
+            if (data.success){
+                return data.data;
+            }else{
+                throw new Error(data.msg);
+            }
         } else {
             throw new Error(response.status);
         }
@@ -63,7 +67,11 @@ fetchUtil.get = async (url) => {
         });
         let data = await response.json();
         if (response.status === 200) {
-            return data
+            if (data.success){
+                return data.data;
+            }else{
+                throw new Error(data.msg);
+            }
         } else {
             throw new Error(response.status);
         }

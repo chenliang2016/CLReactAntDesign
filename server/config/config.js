@@ -11,11 +11,11 @@ const defaults = {
         downloadFilePrex:'http://localhost/upload/',
     },
     database:{
-        host: 'localhost:3306',
+        host: '127.0.0.1',
         user: 'root',
-        password: '1111',
+        password: '11111',
         port: '3306',
-        database: 'framework',
+        database: 'lmmFrame',
     },
     tokenConfig:{
         JWT_SECRET:"frameAntDesignToken",
@@ -32,9 +32,9 @@ const specific = {
             downloadFilePrex:'http://localhost/upload/',
         },
         database:{
-            host: 'localhost:3306',
-            user: 'root',
-            password: '11111',
+            host: 'rm-uf69e0aq27f1zj341o.mysql.rds.aliyuncs.com',
+            user: 'zhendedev',
+            password: 'Zhendedev123456',
             port: '3306',
             database: 'framework',
         },

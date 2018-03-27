@@ -7,6 +7,7 @@ import {
     Col,
     Button,
     Modal,
+    Divider,
     message
 } from 'antd';
 const confirm = Modal.confirm;
@@ -54,9 +55,9 @@ class CLFrameRole extends React.Component {
                 render: function (text, record, index) {
                     return <div className="table-tools">
                         <a onClick={self.editHandle(record, index)}>修改</a>
-                        <span className="ant-divider"></span>
+                        <Divider type='vertical'/>
                         <a onClick={self.deleteHandle(record, index)}>删除</a>
-                        <span className="ant-divider"></span>
+                        <Divider type='vertical'/>
                         <a onClick={self.configMenu(record, index)}>配置菜单</a>
                     </div>;
                 }

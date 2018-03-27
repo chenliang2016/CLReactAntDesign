@@ -4,7 +4,8 @@ import {
     Form,
     Input,
     Button,
-    Modal
+    Modal,
+    Divider
 } from 'antd';
 const confirm = Modal.confirm;
 import CLContentCard from '../../components/CLContentCard';
@@ -57,9 +58,9 @@ class Users extends React.Component {
                 render: function(text, record, index) {
                     return <div>
                         <a onClick={self.editHandle(record, index)}>修改</a>
-                      <span className="ant-divider"></span>
+                      <Divider type='vertical'/>
                       <a onClick={self.deleteHandle(record, index)}>删除</a>
-                      <span className="ant-divider"></span>
+                      <Divider type='vertical'/>
                       <a onClick={self.configRole(record, index)}>配置角色</a>
                     </div>;
                 }

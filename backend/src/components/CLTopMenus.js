@@ -11,9 +11,9 @@ class CLTopMenus extends React.Component{
         }
     }
 
-    onClickMenu = (tag,i) => {
+    onClickMenu = (id,i) => {
         this.setState({selectMenu:i});
-        this.props.onClickMenu(tag);
+        this.props.onClickMenu(id);
     }
 
     render() {
@@ -22,7 +22,7 @@ class CLTopMenus extends React.Component{
             return <CLTopMenu 
                 key={i}
                 isOnFoucs = {this.state.selectMenu == i? true:false}
-                onClickMenu = {() => {this.onClickMenu(item.tag,i)}}
+                onClickMenu = {() => {this.onClickMenu(item.id,i)}}
                 title={item.title} />
         })}
         </div>

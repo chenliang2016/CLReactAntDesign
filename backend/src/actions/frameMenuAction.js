@@ -34,11 +34,11 @@ export const getMenuList = (page,pmenuId) => {
     }
 };
 
-export const deleteMenu = (menuId) => {
+export const deleteMenu = (menuId,callback) => {
     return dispatch => {
         fetchUtil.get(`/api/menu/delete?id=${menuId}`)
             .then((rs)=>{
-                dispatch(getMenuList(1))
+                callback();
             },e =>{
                 dispatch(setTableNormal())
             });

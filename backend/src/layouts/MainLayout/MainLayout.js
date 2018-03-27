@@ -17,47 +17,35 @@ class MainLayout extends Component {
 
     constructor() {
         super();
-        var menus = this.getMenus("normal");
+
+        var menusJson = sessionStorage.getItem('menus');
+        this.topmenus = JSON.parse(menusJson);
+
         var name = sessionStorage.getItem('name');
         const clientHeight = document.body.clientHeight;
         const height =  document.body.clientHeight - 64;
         const contentHeight = height - 64;
         global.contentHeight = contentHeight;
         this.state = {
-            menus: menus,
+            menus: [],
             name: name,
             clientHeight:clientHeight,
             containerHeight:height,
             contentHeight:contentHeight,
         };
-
-        this.topmenus = [
-            {title:"订单管理",tag:"order"},
-            {title:"店铺管理",tag:"shop"},
-            {title:"运营管理",tag:"activity"},
-            {title:"用户管理",tag:"user"},
-            {title:"账号管理",tag:"account"},
-            {title:"基础配置",tag:"config"},
-        ]
     }
 
-    getMenus = (tag) => {
-        var menusJson = sessionStorage.getItem('menus');
-        var menus = JSON.parse(menusJson);
+    componentDidMount() {
+        this.chooseTopMenu(1);
+    }
 
-        var newMenus = [];
-
-        menus.map((item) => {
-            if (item.tag == tag){
-                newMenus.push(item);
+    chooseTopMenu = (id) => {
+        var menus = [];
+        this.topmenus.map((item) => {
+            if (item.id == id){
+                menus = item.subs;
             }
         })
-
-        return newMenus;
-    }
-
-    chooseTopMenu = (tag) => {
-        var menus = this.getMenus(tag);
         this.setState({menus:menus});
     }
 
@@ -70,7 +58,7 @@ class MainLayout extends Component {
     renderHeader = () => {
         return <div className={styles.header}>
                     <div className={styles.headerleft} >
-                        <div className={styles.logo} onClick={() => this.chooseTopMenu("normal")} >
+                        <div className={styles.logo} onClick={() => this.chooseTopMenu(1)} >
                             <div className={styles.logoItem}>
                                 <img src={LOGO} className={styles.img}/>
                             </div>
@@ -80,7 +68,7 @@ class MainLayout extends Component {
                         </div>
                         <CLTopMenus
                             menus = {this.topmenus}
-                            onClickMenu = {(tag) =>  this.chooseTopMenu(tag)}
+                            onClickMenu = {(id) =>  this.chooseTopMenu(id)}
                         />
                     </div>
                     <div className={styles.headerRight}>

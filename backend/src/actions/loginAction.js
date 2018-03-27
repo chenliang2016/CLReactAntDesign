@@ -41,6 +41,8 @@ function loopTreeData(data, pid){
     for (var i = 0; i < data.length; i++) {
         if (data[i].pmenuId == pid) {
             var obj = {
+                "id":data[i].menuId,
+                "pid":data[i].pmenuId,
                 "title": data[i].name,
                 "key":data[i].menuKey,
                 "tag":data[i].tag,
@@ -69,21 +71,17 @@ export default (username,password) => {
                         username: username,
                         password: password})
               .then((rs)=>{
-                    if(rs.success){
                         sessionStorage.setItem('login', 'true');
-                        sessionStorage.setItem('name',rs.data.name);
-                        sessionStorage.setItem('token',rs.data.token);
+                        sessionStorage.setItem('name',rs.name);
+                        sessionStorage.setItem('token',rs.token);
                         var menus = loopTreeData(rs.menus,-1);
                         var str = JSON.stringify(menus);
                         sessionStorage.setItem('menus', str);
                         dispatch(loginSuccessAction());
                         dispatch(replace('/'));
-                    }else{
-                        message.info("用户密码错误");
-                        dispatch(loginFailedAction());
-                    }
+                  
               },e =>{
-                  message.info(e);
+                  message.info("用户密码错误");
                   dispatch(loginFailedAction());
               });
 

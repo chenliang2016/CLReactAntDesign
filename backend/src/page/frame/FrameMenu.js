@@ -6,6 +6,7 @@ import {
     Row,
     Col,
     Button,
+    Divider,
     Modal,
     message
 } from 'antd';
@@ -61,7 +62,7 @@ class CLFrameMenu extends React.Component {
                 render: function(text, record, index) {
                     return <div className="table-tools">
                         <a onClick={self.editHandle(record, index)}>修改</a>
-                        <span className="ant-divider"></span>
+                        <Divider type='vertical'/>
                         <a onClick={self.deleteHandle(record, index)}>删除</a>
                     </div>;
                 }
@@ -84,11 +85,14 @@ class CLFrameMenu extends React.Component {
             treeData:[],
             selectItems:[]
         };
+
+        this.page = 1;
     }
 
     componentDidMount() {
         const {dispatch} = this.props;
-        dispatch(getMenuList(1));
+        this.page = 1;
+        this.getMenuList();
     }
 
     deleteHandle = (record)=>{
@@ -99,7 +103,9 @@ class CLFrameMenu extends React.Component {
                 title: '提示',
                 content: '确认删除？',
                 onOk() {
-                    dispatch(deleteMenu(record.menuId));
+                    dispatch(deleteMenu(record.menuId,() => {
+                        self.getMenuList();
+                    }));
                 },
                 onCancel() {}
             });
@@ -122,15 +128,20 @@ class CLFrameMenu extends React.Component {
         const {dispatch} = this.props;
         dispatch(formHide());
         if (d) {
-            dispatch(getMenuList(1));
+            this.getMenuList();
         }
     };
 
     treeNodeOnSelect = (info)=>{
         this.pmenuId = info[0];
-        const {dispatch} = this.props;
-        dispatch(getMenuList(1,this.pmenuId));
+        this.page = 1;
+        this.getMenuList();
     };
+
+    getMenuList = () => {
+        const {dispatch} = this.props;
+        dispatch(getMenuList(this.page,this.pmenuId));
+    }
 
     render() {
         const self = this;
@@ -187,7 +198,8 @@ class CLFrameMenu extends React.Component {
             showTotal:total => `共 ${total} 项`,
             pageSize:10,
             onChange(current) {
-                dispatch(getMenuList(current,self.pmenuId));
+                self.page = current;
+                self.getMenuList();
             },
         };
 

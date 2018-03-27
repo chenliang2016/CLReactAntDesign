@@ -2,14 +2,18 @@
 * CLReactAntDesign是基于[AntDesign2.0+](https://ant.design/)开发的后端页面例子，
 * 整合react，react-router,react-redux，react-router-redux。进行页面状态控制
 * 实用fetch进行页面请求，最终生成静态页面，实现前后端完全分离
-* 附带使用koa实现的后端接口
-
+* 附带使用koa实现的后端接口   //住server下面是koa写的接口，目前框架不使用此接口，仅供想学习koa的同学参考参考接口
+* 新版本使用egg实现后端接口
+ 
 # 开发环境
-* 基于node7.0+进行开发
+* 基于node8.0+进行开发
 
 # 目录介绍
 * backend:基于AntDesign使用的后端SPA。
-* server:后端koa搭建的服务接口，主要包括，菜单管理，角色管理，用户管理，信息发布。使用前，调整mysql数据库。使用clantd.sql修改数据库。
+* server:后端koa搭建的服务接口，主要包括，菜单管理，角色管理，用户管理，信息发布。 //目前废弃不再使用
+* eggserver：后端使用egg搭建服务接口
+
+使用前，调整mysql数据库。使用 clantd.sql修改数据库。
 
 # 工程运行
 进入到backend目录，编译运行前端框架
@@ -57,18 +61,18 @@ npm run pub
 
 # 后端工程启动
 
-后端工程主要提供了一些基础的接口。使用koa来开发。利用JWT整合token机制。
+后端工程主要提供了一些基础的接口。使用egg来开发。利用JWT整合token机制。
 
 
 ## 安装
 
 使用clantd.sql进行数据库的安装，
 
-进入到server文件夹下，
+进入到eggserver文件夹下，
 
 ### 修改数据库配置文件
 
-修改serer/config/config.js下的数据库配置文件
+修改eggserver/config/config.default.js下的数据库配置文件
 
 ![](img/database.png)
 
@@ -79,11 +83,18 @@ npm install
 
 ```
 
-## 启动
-
+## 启动开发
 
 ```
-npm start
+npm run dev
+
+```
+
+## 后台部署
+
+```
+npm start //开始
+npm stop //stop
 
 ```
 

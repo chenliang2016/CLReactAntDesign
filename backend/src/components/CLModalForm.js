@@ -86,17 +86,11 @@ class CLModalForm extends React.Component {
 
             fetchUtil.post(this.state.edit ? updateUrl : addUrl, formData)
                 .then((rs) => {
-                    if (rs.success) {
                         self.setState({
                             loading: false
                         });
                         resetFields();
                         self.props.onClose(rs);
-                    } else {
-                        self.setState({
-                            loading: false
-                        });
-                    }
                 }, e => {
                     self.setState({
                         loading: false

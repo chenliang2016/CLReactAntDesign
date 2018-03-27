@@ -53,13 +53,9 @@ class CLForm extends React.Component {
                 ? updateUrl
                 : addUrl, formData)
                 .then((rs)=> {
-                    if (rs.success) {
                         self.setState({loading: false});
                         resetFields();
                         self.props.onSubmitSuccess(rs);
-                    } else {
-                        self.setState({loading: false});
-                    }
                 }, e => {
                     self.setState({loading: false});
                 });

@@ -131,13 +131,8 @@ export const configRoleMenu = (roleId,menus) => {
         dispatch(RoleMenuFormLoadingAction(true));
         fetchUtil.post(`/api/role/configRoleMenu`,{menus:menus,roleId:roleId})
             .then((d)=>{
-                if (d.success) {
-                    dispatch(hideRoleMenuFormAction());
-                    dispatch(RoleMenuFormLoadingAction(false));
-                } else {
-                    dispatch(hideUserRoleFormAction());
-                    dispatch(RoleMenuFormLoadingAction(false));
-                }
+                dispatch(hideRoleMenuFormAction());
+                dispatch(RoleMenuFormLoadingAction(false));
             },e =>{
 
             });
