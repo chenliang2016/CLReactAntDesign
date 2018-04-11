@@ -14,6 +14,7 @@ import styles from "page/style/pageStyle.less";
 
 
 import fetchUtil from 'utils/fetchUtil';
+import CLContentCardWithClose from './CLContentCardWithClose';
 
 class LMMCommonCURD extends React.Component {
 
@@ -24,6 +25,12 @@ class LMMCommonCURD extends React.Component {
 
         this.columns = props.columns;
 
+        let otherDeals = props.otherDeals;
+
+        if (otherDeals == undefined){
+            otherDeals = [];
+        }
+
         this.columns.push({
             title: '操作',
             key: '操作',
@@ -32,6 +39,14 @@ class LMMCommonCURD extends React.Component {
                     <a onClick={self.editHandle(record, index)}>修改</a>
                   <Divider type='vertical'/>
                   <a onClick={self.deleteHandle(record, index)}>删除</a>
+                  {
+                    otherDeals.map((item,index) => {
+                        return <span key={index}>
+                            <Divider type='vertical'/>
+                            <a onClick={() => item.dealAction(record, index)}>{item.title}</a>
+                        </span>
+                    })
+                  }
                 </div>;
             }
         })
@@ -48,15 +63,32 @@ class LMMCommonCURD extends React.Component {
 
     componentDidMount() {
         this.page = 1;
+        if (this.props.bindRef != undefined){
+            this.props.bindRef(this)
+        }else{
+            this.getlist();
+        }
+    }
+
+    loaddata = () => {
+        this.page = 1;
         this.getlist();
     }
 
     getlist(){
         this.setState({loading:true});
-        fetchUtil.get(`${this.props.apiList}?page=${this.page}&size=10`).then((data) => {
-            this.setState({loading:false});
-            this.setState({data:data.rows,count:data.count})
-        })
+        if (this.props.reloadData == undefined){
+            fetchUtil.get(`${this.props.apiList}?page=${this.page}&size=10`).then((data) => {
+                this.setState({loading:false});
+                this.setState({data:data.rows,count:data.count})
+            })
+        }else {
+            this.props.reloadData(this.page)
+            .then((data) => {
+                this.setState({loading:false});
+                this.setState({data:data.rows,count:data.count})
+            })
+        }
     }
 
     deleteHandle(record) {
@@ -77,12 +109,14 @@ class LMMCommonCURD extends React.Component {
 
     editHandle(record, index){
         return () =>  {
-            this.setState({formdata:record,formedit:true,formVisible:true});
+            let formdata = Object.assign({},record,this.props.otherForm); 
+            this.setState({formdata:formdata,formedit:true,formVisible:true});
         };
     };
 
     showForm = ()=> {
-        this.setState({formdata:{},formedit:false,formVisible:true});
+        let formdata = Object.assign({},{},this.props.otherForm); 
+        this.setState({formdata:formdata,formedit:false,formVisible:true});
     };
 
     formClose = (d) => {
@@ -99,7 +133,8 @@ class LMMCommonCURD extends React.Component {
             showTotal:total => `共 ${total} 项`,
             pageSize:10,
             onChange(current) {
-                self.page = this;
+                self.page = current;
+                self.getlist();
             },
         };
 
@@ -114,17 +149,38 @@ class LMMCommonCURD extends React.Component {
 
         let title = this.props.title + "列表";
 
-        return (
-            <CLContentCard title={title} icon="bars">
-                <div className={styles.operateDiv}>
-                    <Button type="primary"  onClick={this.showForm}>新增{this.props.title}</Button>
-                </div>
-                <Table {...tableProps}/>
-                <CLModalForm  onClose={this.formClose} formItems={this.props.formItems}  visible={this.state.formVisible} edit={this.state.formedit}
-                              formData={this.state.formdata}
-                            updateUrl={this.props.apiUpdate} addUrl={this.props.apiAdd} />
-            </CLContentCard>
-        );
+        let showClose = false;
+        if (this.props.showClose != undefined && this.props.showClose){
+            showClose = true;
+        }
+
+        if (showClose){
+            return (
+                <CLContentCardWithClose 
+                onCloseCard = {() => this.props.closeAction()}
+                title={title} icon="bars">
+                    <div className={styles.operateDiv}>
+                        <Button type="primary"  onClick={this.showForm}>新增{this.props.title}</Button>
+                    </div>
+                    <Table {...tableProps}/>
+                    <CLModalForm  onClose={this.formClose} formItems={this.props.formItems}  visible={this.state.formVisible} edit={this.state.formedit}
+                                  formData={this.state.formdata}
+                                updateUrl={this.props.apiUpdate} addUrl={this.props.apiAdd} />
+                </CLContentCardWithClose>
+            );
+        }else{
+            return (
+                <CLContentCard title={title} icon="bars">
+                    <div className={styles.operateDiv}>
+                        <Button type="primary"  onClick={this.showForm}>新增{this.props.title}</Button>
+                    </div>
+                    <Table {...tableProps}/>
+                    <CLModalForm  onClose={this.formClose} formItems={this.props.formItems}  visible={this.state.formVisible} edit={this.state.formedit}
+                                  formData={this.state.formdata}
+                                updateUrl={this.props.apiUpdate} addUrl={this.props.apiAdd} />
+                </CLContentCard>
+            );
+        }
     }
 }
 
