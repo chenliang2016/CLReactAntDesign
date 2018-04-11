@@ -9,15 +9,20 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
 
+  config.upload = {
+    localFilePrex: '/Users/chenliang/website/',
+    remoteFilePrex: 'http://localhost:7002/',
+  }
+
   config.security = {
     csrf: {
-      enable:false,
+      enable: false,
     },
   }
 
   config.jwt = {
     secret: 'frameAntDesignToken',
-    expiresIn:"30m",
+    expiresIn: "30m",
     enable: true, // default is false
     match: '/success', // �optional
   };

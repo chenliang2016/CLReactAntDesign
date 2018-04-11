@@ -7,7 +7,9 @@
     "egg": "^2.2.1",
     "egg-jwt": "^2.2.1",
     "egg-mysql": "^3.0.0",
-    "egg-scripts": "^2.5.0"
+    "egg-scripts": "^2.5.0",
+    "stream-wormhole": "^1.0.3",
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",
