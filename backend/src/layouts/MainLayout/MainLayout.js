@@ -1,15 +1,31 @@
-import React, {Component, PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, {
+    Component,
+    PropTypes
+} from 'react';
+import {
+    Link
+} from 'react-router';
 import styles from './MainLayout.less';
 import LOGO from '../../img/LOGO.png';
 import sep from 'img/sep.png'
 import head from '../../img/head.png';
-import {replace} from 'react-router-redux'
-import {connect} from 'react-redux'
+import {
+    replace
+} from 'react-router-redux'
+import {
+    connect
+} from 'react-redux'
 
 import CLTopMenus from 'components/CLTopMenus'
 
-import {Menu, Breadcrumb, Icon, Popconfirm, Row, Col} from 'antd';
+import {
+    Menu,
+    Breadcrumb,
+    Icon,
+    Popconfirm,
+    Row,
+    Col
+} from 'antd';
 const SubMenu = Menu.SubMenu;
 
 @connect()
@@ -23,35 +39,39 @@ class MainLayout extends Component {
 
         var name = sessionStorage.getItem('name');
         const clientHeight = document.body.clientHeight;
-        const height =  document.body.clientHeight - 64;
+        const height = document.body.clientHeight - 64;
         const contentHeight = height - 64;
         global.contentHeight = contentHeight;
         this.state = {
             menus: [],
             name: name,
-            clientHeight:clientHeight,
-            containerHeight:height,
-            contentHeight:contentHeight,
+            clientHeight: clientHeight,
+            containerHeight: height,
+            contentHeight: contentHeight,
         };
     }
 
     componentDidMount() {
-        this.chooseTopMenu(1);
+        this.chooseTopMenu(this.topmenus[0].id);
     }
 
     chooseTopMenu = (id) => {
         var menus = [];
         this.topmenus.map((item) => {
-            if (item.id == id){
+            if (item.id == id) {
                 menus = item.subs;
             }
         })
-        this.setState({menus:menus});
+        this.setState({
+            menus: menus
+        });
     }
 
-    confirm = ()=> {
+    confirm = () => {
         sessionStorage.setItem('login', 'false');
-        const {dispatch} = this.props;
+        const {
+            dispatch
+        } = this.props;
         dispatch(replace("/user/login"));
     }
 
@@ -91,7 +111,7 @@ class MainLayout extends Component {
 
     render() {
         var menus = this.state.menus;
-        var menu = menus.map(function (menu) {
+        var menu = menus.map(function(menu) {
             var submenus = [];
             var subs = menu.subs;
             for (var i = 0; i < subs.length; i++) {
@@ -140,7 +160,6 @@ class MainLayout extends Component {
             </div>
         );
     }
-}
-;
+};
 
 export default MainLayout;
