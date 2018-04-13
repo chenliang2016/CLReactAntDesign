@@ -15,6 +15,7 @@ import styles from "page/style/pageStyle.less";
 
 import fetchUtil from 'utils/fetchUtil';
 import CLContentCardWithClose from './CLContentCardWithClose';
+import LmmTableViewSearch from 'components/LmmTableViewSearch';
 
 class LMMCommonCURD extends React.Component {
 
@@ -24,6 +25,11 @@ class LMMCommonCURD extends React.Component {
         var self = this;
 
         this.columns = props.columns;
+        if (props.searchFields == undefined){
+            this.searchFields = {};
+        }else{
+            this.searchFields = props.searchFields;
+        }
 
         let otherDeals = props.otherDeals;
 
@@ -75,10 +81,28 @@ class LMMCommonCURD extends React.Component {
         this.getlist();
     }
 
+    search = (values) => {
+        this.searchValues = values;
+        this.page = 1;
+        this.getlist();
+    }
+
     getlist(){
         this.setState({loading:true});
         if (this.props.reloadData == undefined){
-            fetchUtil.get(`${this.props.apiList}?page=${this.page}&size=10`).then((data) => {
+            let url = `${this.props.apiList}?page=${this.page}&size=10`;
+
+            if (this.searchValues != undefined){
+                for (var key of Object.keys(this.searchValues)){
+                    let value = this.searchValues[key];
+                    if (value != undefined && value != ""){
+                        url = url + `&${key}=${value}`
+                    }
+                }
+            }
+            console.log(url);
+
+            fetchUtil.get(url).then((data) => {
                 this.setState({loading:false});
                 this.setState({data:data.rows,count:data.count})
             })
@@ -159,6 +183,12 @@ class LMMCommonCURD extends React.Component {
                 <CLContentCardWithClose 
                 onCloseCard = {() => this.props.closeAction()}
                 title={title} icon="bars">
+                    {this.props.searchFields != undefined && Object.keys(this.props.searchFields).length>0?
+                        <LmmTableViewSearch 
+                        searchAction = {(values) => this.search(values)}
+                        searchFields = {this.searchFields}/>
+                    :null
+                    }
                     <div className={styles.operateDiv}>
                         <Button type="primary"  onClick={this.showForm}>新增{this.props.title}</Button>
                     </div>
@@ -171,6 +201,12 @@ class LMMCommonCURD extends React.Component {
         }else{
             return (
                 <CLContentCard title={title} icon="bars">
+                {this.props.searchFields != undefined && Object.keys(this.props.searchFields).length>0?
+                    <LmmTableViewSearch 
+                    searchAction = {(values) => this.search(values)}
+                    searchFields = {this.searchFields}/>
+                :null
+                }
                     <div className={styles.operateDiv}>
                         <Button type="primary"  onClick={this.showForm}>新增{this.props.title}</Button>
                     </div>

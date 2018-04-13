@@ -12,7 +12,8 @@ class EquipmentList extends React.Component {
     }
 
 	//reloadData,返回的格式必须是{rows:[],count:0}
-    reloadData = (page) => {
+    reloadData = (page,searchValues) => {
+        console.log(searchValues);
         return fetchUtil.get(`/api/equipment/list?page=${page}&size=10`)
     }
 
@@ -97,6 +98,12 @@ class EquipmentList extends React.Component {
             }, 
         ];
 
+        let searchFields = [{
+            title:'地址',
+            attr:'address',
+            type:'input'
+        }]
+
         let curdProps = {
             title:'设备',
             columns:columns,
@@ -109,7 +116,8 @@ class EquipmentList extends React.Component {
             otherForm:{},//可以添加额外定死的参数
             closeAction:() => this.props.onClose(),
             bindRef:(ref) => this.curdComponent = ref,//绑定子组件，可用this.curdComponent直接调用curd方法
-            reloadData:(page) => {return this.reloadData(page)},
+            reloadData:(page,searchValues) => {return this.reloadData(page,searchValues)}, //配合searchFields使用，返回相应的keyvalues
+            searchFields:searchFields,//需要搜索的字段，跟标题
         }
 
         return (
