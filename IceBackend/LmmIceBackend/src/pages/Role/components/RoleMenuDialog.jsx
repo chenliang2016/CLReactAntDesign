@@ -9,13 +9,13 @@ import { enquireScreen } from 'enquire-js';
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
-const CONFIG_USERROLE = gql`
-   mutation ConfigUserRole($userId:Int!, $userRoles: String!) {
-      configUserRole(userId:$userId,userRoles:$userRoles)
+const CONFIG_ROLEMENU = gql`
+   mutation ConfigRoleMenu($roleId:Int!, $roleMenus: String!) {
+        configRoleMenu(roleId:$roleId,roleMenus:$roleMenus)
     }
 `;
 
-export default class UserRoleDialog extends Component {
+export default class RoleMenuDialog extends Component {
   static displayName = 'SimpleFormDialog';
 
   constructor(props) {
@@ -28,7 +28,7 @@ export default class UserRoleDialog extends Component {
 
   componentWillReceiveProps(nextProps){
     this.setState({
-      checkedKeys: nextProps.userRoleSelect
+      checkedKeys: nextProps.roleMenuSelect
     });
   }
 
@@ -52,6 +52,7 @@ export default class UserRoleDialog extends Component {
   };
 
   handleCheck = (keys, info) => {
+      console.log(keys);
     this.setState({
       checkedKeys: keys
     });
@@ -60,10 +61,10 @@ export default class UserRoleDialog extends Component {
 
   onOk = (submitAction) => {
     
-      let userRoles = this.state.checkedKeys.join(',');
+      let roleMenus = this.state.checkedKeys.join(',');
       let variables = {
-        userId:this.props.userId,
-        userRoles:userRoles,
+        roleId:this.props.roleId,
+        roleMenus:roleMenus,
       }
 
       submitAction({variables:variables})
@@ -94,25 +95,23 @@ export default class UserRoleDialog extends Component {
 
     return (
       <Mutation 
-      mutation={CONFIG_USERROLE }>
+      mutation={CONFIG_ROLEMENU }>
       {(submitAction, { data }) => (
         <Dialog
           className="simple-form-dialog"
           style={simpleFormDialog}
           autoFocus={false}
           footerAlign="center"
-          title="配置用户角色"
+          title="配置角色菜单"
           {...this.props}
           onOk={() => this.onOk(submitAction)}
           onCancel={this.props.hideDialog}
           onClose={this.props.hideDialog}
           isFullScreen
-          visible={this.props.userRoleVisible}
+          visible={this.props.roleMenuVisible}
         >
-
-       
-        
         <Tree
+            defaultExpandAll
             multiple
             checkable
             checkStrictly={true}

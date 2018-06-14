@@ -14,7 +14,12 @@ module.exports = {
     allrole(root,{},ctx){
         let roleList = ctx.connector.role.getAllRoles();
         return roleList;
-    }
+    },
+
+    roleMenus(root,{roleId} ,ctx) {
+        let roleMenus = ctx.connector.role.getRoleMenus(roleId);
+        return roleMenus;
+    },
   },
 
   Mutation: {
@@ -40,6 +45,18 @@ module.exports = {
     }, ctx) {
         ctx.service.role.update('frole',roleInput,{roleId:roleId});
         return true;
+    },
+
+    configRoleMenu(root, {
+        roleId,
+        roleMenus
+      }, ctx) {
+          let data = {
+            roleId:roleId,
+            menus:roleMenus
+          }
+          ctx.service.role.configRoleMenu(data);
+          return true;
     },
   },
 };

@@ -18,4 +18,5 @@ type Mutation {
   createRole (roleInput: RoleInput!): Boolean
   updateRole (roleId: Int!, roleInput: RoleInput!): Boolean
   deleteRole (roleId: Int!): Boolean 
+  configRoleMenu (roleId: Int!, roleMenus: String!): Boolean
 }

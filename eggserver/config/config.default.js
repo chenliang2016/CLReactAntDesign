@@ -24,8 +24,8 @@ module.exports = appInfo => {
     secret: 'frameAntDesignToken',
     expiresIn: "30m",
     enable: true, // default is false
-    // match: ['/api/menu/*','/graphql'], // �optional
-    match: ['/api/menu/*'], // �optional
+    match: ['/api/menu/*','/graphql'], // �optional
+    // match: ['/api/menu/*'], // �optional
   };
 
   config.mysql = {

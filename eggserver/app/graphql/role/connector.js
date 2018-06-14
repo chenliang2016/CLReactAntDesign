@@ -16,6 +16,10 @@ class RoleConnector {
         return await this.ctx.service.role.getAllRoles();
     }
 
+    async getRoleMenus(roleId) {
+        return await this.ctx.service.role.getRoleMenus(roleId);
+    }
+
 }
 
 module.exports = RoleConnector;

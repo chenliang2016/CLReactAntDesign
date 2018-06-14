@@ -12,8 +12,6 @@ module.exports = {
     },
 
     userRoles(root,{userId} ,ctx) {
-        console.log(userId);
-
         let userRole = ctx.connector.user.getUserRoles(userId);
         return userRole;
     },

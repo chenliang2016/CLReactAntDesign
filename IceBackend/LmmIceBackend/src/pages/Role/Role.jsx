@@ -9,6 +9,7 @@ import graphqlUtil from '../../utils/graphqlUtil';
 import {getTreeData} from '../../utils/treeConvertUtil';
 
 import LmmBaseTable  from '../../components/LmmBaseTable';
+import RoleMenuDialog from './components/RoleMenuDialog';
 
 const GET_LIST = gql`
     query roleList($proleId:Int,$page: Int!) {
@@ -29,17 +30,30 @@ const DELETE = gql`
     }
 `;
 
+
+const GET_ROLEMENUS = gql`
+    query RoleMenus($roleId: Int!) {
+      roleMenus(roleId: $roleId) {
+         menuId
+      }
+  }
+`
+
 export default class Role extends Component {
   static displayName = 'User';
 
   constructor(props) {
     super(props);
     this.state = {
+      roleId:undefined,
       formData:{},
       formVisible:false,
+      roleMenuVisible:false,
       isFormEdit:false,
       currentPage:1,
       treeData:[],
+      menuTreeData:[],
+      roleMenuSelect:[],
     };
 
     this.proleId = undefined;
@@ -54,7 +68,36 @@ export default class Role extends Component {
   }
 
   componentDidMount(){
+      this.getAllMenus();
       this.getAllRoles();
+  }
+
+  getAllMenus = () => {
+    graphqlUtil.query(`
+        query{
+          allmenu{
+            menuId,
+            name,
+            pmenuId
+          }
+      }
+    `).then(data => {
+
+        const treeNode = {
+          title:'name',
+          key:'menuId',
+          pkey:'pmenuId',
+        }
+
+        let list = data.allmenu;
+        let treeData = [];
+        if (list != undefined){
+            treeData = getTreeData(treeNode,list,'-1');
+        }
+
+        this.setState({menuTreeData:treeData})
+
+    })
   }
 
   getAllRoles = () => {
@@ -111,6 +154,31 @@ export default class Role extends Component {
     });
   };
 
+  hideRoleMenuDialog = () => {
+    this.setState({
+      roleMenuVisible:false
+    })
+  }
+
+  configMenu = (record) => {
+    this.setState({
+      roleId:record.roleId,
+      roleMenuVisible:true
+    })
+    this.getRoleMenus(record.roleId);
+  }
+
+  getRoleMenus = (roleId) => {
+    graphqlUtil.queryWithParams(GET_ROLEMENUS,{roleId:roleId}).then(data => {
+
+        let selectKeys = data.roleMenus.map((item) => {
+            return `${item.menuId}`;
+        })
+
+        this.setState({roleMenuSelect:selectKeys});
+     });
+  }
+
   render() {
     return (
       <div>
@@ -125,6 +193,14 @@ export default class Role extends Component {
         }
       }}
       />
+
+      <RoleMenuDialog 
+        roleId = {this.state.roleId}
+        hideDialog = {this.hideRoleMenuDialog}
+        roleMenuSelect = {this.state.roleMenuSelect}
+        treeData = {this.state.menuTreeData}
+        roleMenuVisible={this.state.roleMenuVisible} />
+
       <Query 
       query={GET_LIST} 
       variables={{proleId:this.proleId,page:1}}>
@@ -174,6 +250,13 @@ export default class Role extends Component {
                   }}
                   editForm = {(data) => this.changeFormData(data) }  
                   data={data.role.rolelist} reloadData = {() => {refetch()}}
+                  otherButtons={[
+                    {
+                      key:'configKey',
+                      title:'配置菜单',
+                      action:this.configMenu,
+                    }
+                 ]}
                 />
               
             </div>

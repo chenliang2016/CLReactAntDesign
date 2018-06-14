@@ -94,7 +94,6 @@ export default class UserLogin extends Component {
 
         const menus = loopTreeData(data.menus,-1);
         const str = JSON.stringify(menus);
-        console.log(str);
         sessionStorage.setItem('menus', str);
         
         hashHistory.replace('/') 

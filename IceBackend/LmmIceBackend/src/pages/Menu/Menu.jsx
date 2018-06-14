@@ -69,7 +69,6 @@ export default class Menu extends Component {
   }
 
   getAllMenus = () => {
-    console.log("请求接口")
     graphqlUtil.query(`
         query{
           allmenu{

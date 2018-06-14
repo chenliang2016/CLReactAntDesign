@@ -8,4 +8,5 @@ type Query {
 
   role(proleId:Int,page: Int!,size: Int!): RoleList!
   allrole : [Role]!
+  roleMenus(roleId: Int!) : [RoleMenu]!
 }

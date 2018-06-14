@@ -25,14 +25,14 @@ const client = new ApolloClient({
     });
   },
   onError: ({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      console.log(graphQLErrors);
-      sendToLoggingService(graphQLErrors);
-    }
-    if (networkError) {
+    // if (graphQLErrors) {
+    //   console.log(graphQLErrors);
+    //   sendToLoggingService(graphQLErrors);
+    // }
+    // if (networkError) {
       hashHistory.replace('/login');
       Feedback.toast.error('网络异常');
-    }
+    // }
   },
 });
 

@@ -24,8 +24,14 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
     const openKeys = this.getOpenKeys();
     this.state = {
       openKeys,
+      name:'',
     };
     this.openKeysCache = openKeys;
+  }
+
+  componentDidMount() {
+     let name =   sessionStorage.getItem('name');
+     this.setState({name})
   }
 
   /**
@@ -156,7 +162,7 @@ export default class HeaderAsideFooterResponsiveLayout extends Component {
           {/* 侧边菜单项 end */}
         </Layout.Aside>
         <Layout.Section>
-          <Header theme="light" />
+          <Header theme="light" name={this.state.name} />
           {/* 主体内容 */}
           <Layout.Main scrollable style={{ paddingRight: 20, paddingTop: 20 }}>
             {this.props.children}

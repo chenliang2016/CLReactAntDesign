@@ -80,14 +80,7 @@ export default class Header extends PureComponent {
                 />
                 <div className="user-profile">
                   <span className="user-name" style={{ fontSize: '13px' }}>
-                    淘小宝
-                  </span>
-                  <br />
-                  <span
-                    className="user-department"
-                    style={{ fontSize: '12px', color: '#999' }}
-                  >
-                    技术部
+                    {this.props.name}
                   </span>
                 </div>
                 <Icon
@@ -107,12 +100,12 @@ export default class Header extends PureComponent {
                 </Link>
               </li>
               <li className="user-profile-menu-item">
-                <Link to="/">
-                  <FoundationSymbol type="repair" size="small" />设置
-                </Link>
-              </li>
-              <li className="user-profile-menu-item">
-                <Link to="/">
+                <Link 
+                onClick={() => {
+                  sessionStorage.setItem("token",'');
+                  sessionStorage.setItem("name",'');
+                }}
+                to="/login">
                   <FoundationSymbol type="compass" size="small" />退出
                 </Link>
               </li>
