@@ -139,6 +139,21 @@ export default class Menu extends Component {
         }
       }}
       />
+
+      <SimpleFormDialog 
+                treeData = {this.state.treeData}
+                isFormEdit = {this.state.isFormEdit}
+                hideDialog = {this.hideDialog}
+                formVisible={this.state.formVisible} 
+                formData={this.state.formData} 
+                reloadData = {(pmenuId) => {
+                  if (pmenuId != undefined){
+                    this.tableRefetch({pmenuId:pmenuId})
+                  }else{
+                    this.tableRefetch();
+                  }
+                }} />
+
       <Query 
       query={GET_MENUS} 
       variables={{pmenuId:this.pmenuId,page:1}}>
@@ -151,20 +166,6 @@ export default class Menu extends Component {
           }
 
           return <div>
-              <SimpleFormDialog 
-                treeData = {this.state.treeData}
-                isFormEdit = {this.state.isFormEdit}
-                hideDialog = {this.hideDialog}
-                formVisible={this.state.formVisible} 
-                formData={this.state.formData} 
-                reloadData = {(pmenuId) => {
-                  if (pmenuId != undefined){
-                    refetch({pmenuId:pmenuId})
-                  }else{
-                    refetch();
-                  }
-                }} />
-
                 <LmmBaseTable
                   deleteQL = {DELETE}
                   deleteOperate = {(deleteAction,record) => {

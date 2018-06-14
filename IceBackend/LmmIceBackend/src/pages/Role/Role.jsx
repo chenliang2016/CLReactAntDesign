@@ -194,6 +194,20 @@ export default class Role extends Component {
       }}
       />
 
+      <SimpleFormDialog 
+                treeData = {this.state.treeData}
+                isFormEdit = {this.state.isFormEdit}
+                hideDialog = {this.hideDialog}
+                formVisible={this.state.formVisible} 
+                formData={this.state.formData} 
+                reloadData = {(proleId) => {
+                  if (proleId != undefined){
+                    this.tableRefetch.refetch({proleId:proleId})
+                  }else{
+                    this.tableRefetch.refetch();
+                  }
+                }} />
+
       <RoleMenuDialog 
         roleId = {this.state.roleId}
         hideDialog = {this.hideRoleMenuDialog}
@@ -213,20 +227,6 @@ export default class Role extends Component {
           }
 
           return <div>
-              <SimpleFormDialog 
-                treeData = {this.state.treeData}
-                isFormEdit = {this.state.isFormEdit}
-                hideDialog = {this.hideDialog}
-                formVisible={this.state.formVisible} 
-                formData={this.state.formData} 
-                reloadData = {(proleId) => {
-                  if (proleId != undefined){
-                    refetch({proleId:proleId})
-                  }else{
-                    refetch();
-                  }
-                }} />
-
                 <LmmBaseTable
                   deleteQL = {DELETE}
                   deleteOperate = {(deleteAction,record) => {
@@ -258,7 +258,6 @@ export default class Role extends Component {
                     }
                  ]}
                 />
-              
             </div>
         }}
       </Query>
