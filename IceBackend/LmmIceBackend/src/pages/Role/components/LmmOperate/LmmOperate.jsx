@@ -12,7 +12,7 @@ export default class LmmOperate extends Component {
       <IceContainer>
         <Row>
             <Col xxs="6" s="4" l="2" style={styles.label}>
-                  选择菜单:{' '}
+                  选择角色:{' '}
             </Col>
             <Col>
                 <LmmTreeSelect 
@@ -26,7 +26,7 @@ export default class LmmOperate extends Component {
                   alignItems: 'right',
                   justifyContent: 'flex-end',}}>
                   <Button type="primary" onClick={this.props.showDialog}>
-                    新增菜单
+                    新增角色
                   </Button>
             </Col>
         </Row>

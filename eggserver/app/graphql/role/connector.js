@@ -1,17 +1,21 @@
 'use strict';
-class UserConnector {
+class RoleConnector {
     constructor(ctx) {
         this.ctx = ctx;
     }
-    async getUserList(page,size) {
-        return await this.ctx.service.user.getUsersPage(page,size);
+    async getRoleList(proleId,page,size) {
+        return await this.ctx.service.role.getRolesPage(proleId,page,size);
     }
 
-    async getUserCount() {
-        let count = await this.ctx.service.user.getUsersCount();
+    async getRoleCount(proleId) {
+        let count = await this.ctx.service.role.getRolesCount(proleId);
         return count;
+    }
+
+    async getAllRoles() {
+        return await this.ctx.service.role.getAllRoles();
     }
 
 }
 
-module.exports = UserConnector;
+module.exports = RoleConnector;

@@ -16,9 +16,9 @@ type MenuList {
 
 input MenuInput {
   name: String!
-  menuKey: String!
+  menuKey: String
   pmenuId: Int!
   orderNum:Int!
   tourl:String!
-  tag:String!
+  tag:String
 }

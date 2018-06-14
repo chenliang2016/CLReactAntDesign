@@ -10,6 +10,14 @@ module.exports = {
           userlist:userlist,
       };
     },
+
+    userRoles(root,{userId} ,ctx) {
+        console.log(userId);
+
+        let userRole = ctx.connector.user.getUserRoles(userId);
+        return userRole;
+    },
+
   },
 
   Mutation: {
@@ -37,5 +45,18 @@ module.exports = {
         ctx.service.user.update('fuser',userInput,{userId:userId});
         return {loginName:""};
     },
+
+    configUserRole(root, {
+        userId,
+        userRoles
+      }, ctx) {
+          let data = {
+            userId:userId,
+            roles:userRoles
+          }
+          ctx.service.user.configUserRole(data);
+          return true;
+    },
+    
   },
 };

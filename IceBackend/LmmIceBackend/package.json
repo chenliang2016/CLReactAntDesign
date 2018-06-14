@@ -23,8 +23,10 @@
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "axios": "^0.17.1",
-    "bizcharts": "latest",
+    "bizcharts": "^3.1.8",
     "classnames": "^2.2.5",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.11",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "graphql": "^0.13.2",
@@ -71,6 +73,10 @@
   "proxyConfig": {
     "/**": {
       "enable": true,
+      "target": "http://127.0.0.1:7001"
+    },
+    "/*": {
+      "enable": false,
       "target": "http://127.0.0.1:7001"
     }
   }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SimpleFormDialog from './components/SimpleFormDialog';
-import LmmTable from './components/LmmTable';
 import LmmOperate from './components/LmmOperate'
 
 import { gql } from 'apollo-boost';
@@ -11,28 +10,26 @@ import {getTreeData} from '../../utils/treeConvertUtil';
 
 import LmmBaseTable  from '../../components/LmmBaseTable';
 
-const GET_MENUS = gql`
-    query menuList($pmenuId:Int,$page: Int!) {
-      menu(pmenuId:$pmenuId,page: $page,size:10) {
+const GET_LIST = gql`
+    query roleList($proleId:Int,$page: Int!) {
+      role(proleId:$proleId,page: $page,size:10) {
           count,
-          menulist{
-            pmenuId,
-            menuId,
+          rolelist{
+            roleId,
+            proleId,
             name,
-            orderNum,
-            tourl,
           }
       }
   }
 `
 
 const DELETE = gql`
-   mutation DeleteMenu($menuId: Int!) {
-      deleteMenu(menuId: $menuId)
+   mutation DeleteRole($roleId: Int!) {
+      deleteRole(roleId: $roleId)
     }
 `;
 
-export default class Menu extends Component {
+export default class Role extends Component {
   static displayName = 'User';
 
   constructor(props) {
@@ -45,48 +42,39 @@ export default class Menu extends Component {
       treeData:[],
     };
 
-    this.pmenuId = undefined;
+    this.proleId = undefined;
 
     this.columns = [
       {
-        title:"菜单名",
+        title:"角色名",
         name:"name"
-      },
-      {
-        title:"菜单跳转",
-        name:"tourl"
-      },
-      {
-        title:"排序号",
-        name:"orderNum"
       },
     ]
 
   }
 
   componentDidMount(){
-      this.getAllMenus();
+      this.getAllRoles();
   }
 
-  getAllMenus = () => {
-    console.log("请求接口")
+  getAllRoles = () => {
     graphqlUtil.query(`
         query{
-          allmenu{
-            menuId,
+          allrole{
+            roleId,
             name,
-            pmenuId
+            proleId
           }
       }
     `).then(data => {
 
         const treeNode = {
           title:'name',
-          key:'menuId',
-          pkey:'pmenuId',
+          key:'roleId',
+          pkey:'proleId',
         }
 
-        let list = data.allmenu;
+        let list = data.allrole;
         let treeData = [];
         if (list != undefined){
             treeData = getTreeData(treeNode,list,'-1');
@@ -99,18 +87,15 @@ export default class Menu extends Component {
             children:treeData
           }]
         })
-
     })
   }
 
   changeFormData = (data) => {
     
     let formData = {
-      pmenuId:data.pmenuId,
-      menuId:data.menuId,
+      proleId:data.proleId,
+      roleId:data.roleId,
       name:data.name,
-      orderNum:data.orderNum,
-      tourl:data.tourl
     }
 
     this.setState({formData:formData, formVisible:true,isFormEdit:true})
@@ -132,22 +117,22 @@ export default class Menu extends Component {
       <LmmOperate 
       treeData = {this.state.treeData}
       showDialog = {this.showDialog}
-      reloadData = {(pmenuId) => {
-        if (pmenuId != undefined){
-          this.tableRefetch({pmenuId:pmenuId})
+      reloadData = {(proleId) => {
+        if (proleId != undefined){
+          this.tableRefetch({proleId:proleId})
         }else{
           this.tableRefetch();
         }
       }}
       />
       <Query 
-      query={GET_MENUS} 
-      variables={{pmenuId:this.pmenuId,page:1}}>
+      query={GET_LIST} 
+      variables={{proleId:this.proleId,page:1}}>
         {({ loading, error, data, refetch, fetchMore }) => {
 
           this.tableRefetch = refetch;
 
-          if (data.menu == undefined){
+          if (data.role == undefined){
             return null;
           }
 
@@ -158,9 +143,9 @@ export default class Menu extends Component {
                 hideDialog = {this.hideDialog}
                 formVisible={this.state.formVisible} 
                 formData={this.state.formData} 
-                reloadData = {(pmenuId) => {
-                  if (pmenuId != undefined){
-                    refetch({pmenuId:pmenuId})
+                reloadData = {(proleId) => {
+                  if (proleId != undefined){
+                    refetch({proleId:proleId})
                   }else{
                     refetch();
                   }
@@ -169,12 +154,12 @@ export default class Menu extends Component {
                 <LmmBaseTable
                   deleteQL = {DELETE}
                   deleteOperate = {(deleteAction,record) => {
-                    deleteAction({variables:{menuId:record.menuId}})
+                    deleteAction({variables:{roleId:record.roleId}})
                   }}
                   columns = {this.columns}
                   loading = {loading}
                   currentPage ={this.state.currentPage}
-                  total={data.menu.count}
+                  total={data.role.count}
                   onPageChange = {(currentPage) => {
                     fetchMore({
                       variables: {
@@ -188,7 +173,7 @@ export default class Menu extends Component {
                     })
                   }}
                   editForm = {(data) => this.changeFormData(data) }  
-                  data={data.menu.menulist} reloadData = {() => {refetch()}}
+                  data={data.role.rolelist} reloadData = {() => {refetch()}}
                 />
               
             </div>

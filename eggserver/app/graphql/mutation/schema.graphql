@@ -7,4 +7,15 @@ type Mutation {
   updateUser (userId: Int!, userInput: UserInput!): User
   deleteUser (userId: Int!): User 
 
+  configUserRole (userId: Int!, userRoles: String!): Boolean
+
+  # Menu
+  createMenu (menuInput: MenuInput!): Boolean
+  updateMenu (menuId: Int!, menuInput: MenuInput!): Boolean
+  deleteMenu (menuId: Int!): Boolean 
+
+  # Role
+  createRole (roleInput: RoleInput!): Boolean
+  updateRole (roleId: Int!, roleInput: RoleInput!): Boolean
+  deleteRole (roleId: Int!): Boolean 
 }

@@ -1,41 +1,45 @@
 'use strict';
 module.exports = {
   Query: {
-    user(root,{page,size} ,ctx) {
-      let userlist = ctx.connector.user.getUserList(page,size);
-      let userCount = ctx.connector.user.getUserCount(); 
-      
+    role(root,{proleId,page,size} ,ctx) {
+      let roleList = ctx.connector.role.getRoleList(proleId,page,size);
+      let roleCount = ctx.connector.role.getRoleCount(proleId); 
+
       return {
-          count:userCount,
-          userlist:userlist,
+          count:roleCount,
+          rolelist:roleList,
       };
     },
+
+    allrole(root,{},ctx){
+        let roleList = ctx.connector.role.getAllRoles();
+        return roleList;
+    }
   },
 
   Mutation: {
-    createUser(root, {
-        userInput
+    createRole(root, {
+        roleInput
     }, ctx) {
-        ctx.service.user.add('fuser',{
-            loginName:userInput.loginName,
-            loginPasw:userInput.loginPasw,
-            name:userInput.name
+        ctx.service.role.add('frole',{
+            name:roleInput.name,
+            proleId:roleInput.proleId,
         });
-      return {loginName:""};
+        return true;
     },
 
-    deleteUser(root, {
-        userId
+    deleteRole(root, {
+        roleId
     }, ctx) {
-        ctx.service.user.delete('fuser',{userId:userId})
-        return {loginName:""};
+        ctx.service.role.delete('frole',{roleId:roleId})
+        return true;
     },
 
-    updateUser(root, {
-      userId,userInput
+    updateRole(root, {
+        roleId,roleInput
     }, ctx) {
-        ctx.service.user.update('fuser',userInput,{userId:userId});
-        return {loginName:""};
+        ctx.service.role.update('frole',roleInput,{roleId:roleId});
+        return true;
     },
   },
 };

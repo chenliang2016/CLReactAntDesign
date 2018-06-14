@@ -1,6 +1,11 @@
 
 type Query {
   user(page: Int!,size: Int!): UserList!
+  userRoles(userId : Int!) : [UserRole]!
+
   menu(pmenuId:Int,page: Int!,size: Int!): MenuList!
   allmenu : [Menu]!
+
+  role(proleId:Int,page: Int!,size: Int!): RoleList!
+  allrole : [Role]!
 }

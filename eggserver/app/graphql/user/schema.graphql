@@ -11,6 +11,10 @@ type UserList {
   userlist: [User]!
 }
 
+type UserRole {
+   roleId:Int!
+}
+
 input UserInput {
   loginName: String!
   loginPasw: String!

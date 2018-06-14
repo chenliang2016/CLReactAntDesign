@@ -3,46 +3,13 @@ import React, { Component } from 'react';
 import { Table, Pagination,Loading} from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 
-import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
-const DELETE_USER = gql`
-   mutation DeleteUser($userId: Int!) {
-      deleteUser(userId: $userId) {
-        loginName
-      }
-    }
-`;
-export default class LmmTable extends Component {
+export default class LmmBaseTable extends Component {
   static displayName = 'SelectableTable';
-
-  static propTypes = {};
-
-  static defaultProps = {};
 
   constructor(props) {
     super(props);
-
-    // 表格可以勾选配置项
-    this.rowSelection = {
-      // 表格发生勾选状态变化时触发
-      onChange: (ids) => {
-        console.log('ids', ids);
-        this.setState({
-          selectedRowKeys: ids,
-        });
-      },
-      // 全选表格时触发的回调
-      onSelectAll: (selected, records) => {
-        console.log('onSelectAll', selected, records);
-      },
-      // 支持针对特殊行进行定制
-      getProps: (record) => {
-        return {
-          disabled: record.id === 100306660941,
-        };
-      },
-    };
 
     this.state = {
       selectedRowKeys: [],
@@ -58,39 +25,40 @@ export default class LmmTable extends Component {
      this.props.onPageChange(current);
   }
 
-  clearSelectedKeys = () => {
-    this.setState({
-      selectedRowKeys: [],
-    });
-  };
-
-  deleteSelectedKeys = () => {
-    const { selectedRowKeys } = this.state;
-    console.log('delete keys', selectedRowKeys);
-  };
-
-  deleteItem = (record) => {
-    const { userId } = record;
-  };
-
   renderOperator = (value, index, record) => {
+
+    if (this.props.renderCustomOperate){
+        return this.props.renderCustomOperate;
+    }
+
     return (
       <div>
-        <a onClick={() => {this.props.changeFormData(record)}}>编辑</a>
+        <a onClick={() => {this.props.editForm(record)}}>编辑</a>
         <Mutation 
           onCompleted={() =>{
             this.props.reloadData()
           }}
-          mutation={DELETE_USER}>
-          {(DeleteUser, { data }) => (
+          mutation={this.props.deleteQL}>
+          {(deleteAction, { data }) => (
           <a
             style={styles.removeBtn}
-            onClick={() => DeleteUser({variables:{userId:record.userId}})}
+            onClick={() => 
+                this.props.deleteOperate(deleteAction,record)}
           >
             删除
           </a>
         )}
         </Mutation>
+
+        {this.props.otherButtons?
+          this.props.otherButtons.map((item) => {
+            return <a 
+            key={item.key}
+            style={styles.otherBtn}
+            onClick={() => {item.action(record)}}>{item.title}</a>
+          }):null
+        }
+        
       </div>
     );
   };
@@ -103,9 +71,11 @@ export default class LmmTable extends Component {
               <Table
                 dataSource={this.props.data}
               >
-                <Table.Column title="菜单名" dataIndex="name" width={120} />
-                <Table.Column title="菜单跳转" dataIndex="tourl" width={120} />
-                <Table.Column title="排序号" dataIndex="orderNum" width={120} />
+              {
+                  this.props.columns.map(item => {
+                     return  <Table.Column  key={item.name} title={item.title} dataIndex={item.name} width={120} />
+                  })
+              }
                 <Table.Column
                   title="操作"
                   cell={this.renderOperator}
@@ -137,6 +107,9 @@ const styles = {
     justifyContent: 'space-between',
   },
   removeBtn: {
+    marginLeft: 10,
+  },
+  otherBtn: {
     marginLeft: 10,
   },
   pagination: {

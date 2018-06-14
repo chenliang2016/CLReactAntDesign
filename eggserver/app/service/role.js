@@ -35,8 +35,14 @@ class RoleService extends Service {
             sqlString += ` and proleId = ${proleId} `;
         };
 
-        let row =  await this.app.mysql.query(sqlString);
-        return row.cnt;
+        let rows =  await this.app.mysql.query(sqlString);
+
+        let count = 0 ;
+        if (rows.length > 0){
+            count = rows[0].cnt;
+        }
+
+        return count;
     }
     
     async getRoleByPid (proleId) {

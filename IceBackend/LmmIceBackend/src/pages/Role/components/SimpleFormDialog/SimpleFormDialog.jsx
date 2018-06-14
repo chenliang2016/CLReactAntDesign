@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
-import { Dialog, Grid, Input, Radio } from '@icedesign/base';
+import { Dialog, Grid, Input,TreeSelect } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
+  FormBinder as IceFormBinder,
+  FormError as IceFormError,
 } from '@icedesign/form-binder';
 import { enquireScreen } from 'enquire-js';
 
-import { LmmFormInput } from '../../../../components/LmmFormItem';
+const { Row, Col } = Grid;
 
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
+import { LmmFormInput,LmmFormTreeSelect } from '../../../../components/LmmFormItem';
 
-const ADD_USER = gql`
-   mutation CreateUser($userInput: UserInput!) {
-      createUser(userInput: $userInput) {
-        loginName
-      }
+const ADD = gql`
+   mutation CreateRole($roleInput: RoleInput!) {
+      createRole(roleInput: $roleInput) 
     }
 `;
 
-const Edit_USER = gql`
-   mutation UpdateUser($userId: Int!, $userInput: UserInput!) {
-      updateUser(userId:$userId, userInput: $userInput) {
-        loginName
-      }
+const Edit = gql`
+   mutation UpdateRole($roleId: Int!, $roleInput: RoleInput!) {
+      updateRole(roleId:$roleId, roleInput: $roleInput)
     }
 `;
+
 
 export default class SimpleFormDialog extends Component {
   static displayName = 'SimpleFormDialog';
@@ -71,16 +71,18 @@ export default class SimpleFormDialog extends Component {
       }
       // deal with value
       let variables = {
-        userInput:values,
+        roleInput:{
+          name:values.name,
+          proleId:values.proleId,
+        },
       }
 
       if (this.props.isFormEdit){
         variables = {
-          userId:this.props.formData.userId,
-          userInput:{
-            loginName:values.loginName,
-            loginPasw:values.loginPasw,
+          roleId:this.props.formData.roleId,
+          roleInput:{
             name:values.name,
+            proleId:values.proleId,
           },
         }
       }
@@ -106,14 +108,14 @@ export default class SimpleFormDialog extends Component {
       onCompleted={() =>{
         this.props.reloadData()
       }}
-      mutation={this.props.isFormEdit? Edit_USER : ADD_USER }>
+      mutation={this.props.isFormEdit? Edit : ADD }>
       {(submitAction, { data }) => (
         <Dialog
           className="simple-form-dialog"
           style={simpleFormDialog}
           autoFocus={false}
           footerAlign="center"
-          title="用户新增"
+          title="角色新增"
           {...this.props}
           onOk={() => this.onOk(submitAction)}
           onCancel={this.props.hideDialog}
@@ -128,23 +130,17 @@ export default class SimpleFormDialog extends Component {
             value={this.state.value}
           >
             <div style={styles.dialogContent}>
+              <LmmFormTreeSelect 
+                treeData = {this.props.treeData}
+                title='父角色'
+                attName="proleId"
+                errorMsg="父角色必填"
+              />
               <LmmFormInput 
-                title='用户名'
+                title='角色名'
                 attName="name"
-                placeholder="请输入用户名称"
-                errorMsg="请输入用户名称"
-              />
-              <LmmFormInput 
-                title='登录名'
-                attName="loginName"
-                placeholder="请输入登录名"
-                errorMsg="请输入登录名"
-              />
-              <LmmFormInput 
-                title='登录密码'
-                attName="loginPasw"
-                placeholder="请输入密码"
-                errorMsg="请输入密码"
+                placeholder="请输入角色名"
+                errorMsg="角色名必填"
               />
             </div>
           </IceFormBinderWrapper>
@@ -158,4 +154,8 @@ export default class SimpleFormDialog extends Component {
 const styles = {
   simpleFormDialog: { width: '640px' },
   dialogContent: {},
+  formRow: { marginTop: 20 },
+  input: { width: '100%' },
+  formLabel: { lineHeight: '26px' },
+  label: { lineHeight: '28px', paddingRight: '10px' },
 };

@@ -1,18 +1,16 @@
 
-type User {
-  userId: Int!
-  loginName: String!
-  loginPasw: String!
+type Role {
+  roleId: Int!
   name: String!
+  proleId: Int!
 }
 
-type UserList {
+type RoleList {
   count: Int!
-  userlist: [User]!
+  rolelist: [Role]!
 }
 
-input UserInput {
-  loginName: String!
-  loginPasw: String!
+input RoleInput {
   name: String!
+  proleId: Int!
 }

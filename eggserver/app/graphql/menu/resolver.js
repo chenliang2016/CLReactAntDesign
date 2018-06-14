@@ -18,29 +18,30 @@ module.exports = {
   },
 
   Mutation: {
-    createUser(root, {
-        userInput
+    createMenu(root, {
+        menuInput
     }, ctx) {
-        ctx.service.user.add('fuser',{
-            loginName:userInput.loginName,
-            loginPasw:userInput.loginPasw,
-            name:userInput.name
+        ctx.service.menu.add('fmenu',{
+            name:menuInput.name,
+            pmenuId:menuInput.pmenuId,
+            orderNum:menuInput.orderNum,
+            tourl:menuInput.tourl
         });
-      return {loginName:""};
+        return true;
     },
 
-    deleteUser(root, {
-        userId
+    deleteMenu(root, {
+        menuId
     }, ctx) {
-        ctx.service.user.delete('fuser',{userId:userId})
-        return {loginName:""};
+        ctx.service.menu.delete('fmenu',{menuId:menuId})
+        return true;
     },
 
-    updateUser(root, {
-      userId,userInput
+    updateMenu(root, {
+      menuId,menuInput
     }, ctx) {
-        ctx.service.user.update('fuser',userInput,{userId:userId});
-        return {loginName:""};
+        ctx.service.menu.update('fmenu',menuInput,{menuId:menuId});
+        return true;
     },
   },
 };

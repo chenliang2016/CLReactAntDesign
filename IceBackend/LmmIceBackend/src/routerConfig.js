@@ -10,6 +10,8 @@ import Auth from './pages/Auth';
 
 import BlankLayout from './layouts/BlankLayout';
 import User from './pages/User';
+
+import Role from './pages/Role';
 import Menu from './pages/Menu';
 
 const routerConfig = [
@@ -31,6 +33,11 @@ const routerConfig = [
   {
     path: '/login',
     component: Auth,
+  },
+  {
+    path: '/backend/role',
+    layout: AsideLayout,
+    component: Role,
   },
   {
     path: '*',

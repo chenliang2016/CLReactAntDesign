@@ -12,6 +12,11 @@ class UserConnector {
         return count;
     }
 
+    async getUserRoles(userId) {
+        let list = await this.ctx.service.user.getUserRoles(userId);
+        return list;
+    }
+
 }
 
 module.exports = UserConnector;
