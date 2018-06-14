@@ -1,0 +1,6 @@
+
+type Query {
+  user(page: Int!,size: Int!): UserList!
+  menu(pmenuId:Int,page: Int!,size: Int!): MenuList!
+  allmenu : [Menu]!
+}

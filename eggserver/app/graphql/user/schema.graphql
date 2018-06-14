@@ -1,0 +1,18 @@
+
+type User {
+  userId: Int!
+  loginName: String!
+  loginPasw: String!
+  name: String!
+}
+
+type UserList {
+  count: Int!
+  userlist: [User]!
+}
+
+input UserInput {
+  loginName: String!
+  loginPasw: String!
+  name: String!
+}

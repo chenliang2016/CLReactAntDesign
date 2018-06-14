@@ -1,0 +1,10 @@
+
+
+type Mutation {
+
+  # User
+  createUser (userInput: UserInput!): User
+  updateUser (userId: Int!, userInput: UserInput!): User
+  deleteUser (userId: Int!): User 
+
+}

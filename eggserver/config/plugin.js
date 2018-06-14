@@ -12,3 +12,8 @@ exports.jwt = {
     enable: true,
     package: 'egg-jwt',
 };
+
+exports.graphql = {
+    enable: true,
+    package: 'egg-graphql',
+};

@@ -54,7 +54,14 @@ class UserService extends Service {
 
   async getUsersCount(){
     var sqlString = `select count(1) as cnt from fuser `;
-    return await this.query(sqlString).cnt;
+
+    let countRows = await this.query(sqlString);
+    let count = 0;
+    if (countRows != undefined){
+        count = countRows[0].cnt;
+    }
+
+    return count;
   }
 
   async configUserRole(data){

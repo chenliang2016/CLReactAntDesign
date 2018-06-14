@@ -5,6 +5,11 @@ class MenuService extends Service {
 
         let params = {};
 
+        var page = parseInt(page);
+        var size = parseInt(size);
+
+        var start = (page-1)*size;
+
         if (pmenuId != undefined && pmenuId != '') {
             params.pmenuId = pmenuId;
         };
@@ -13,7 +18,7 @@ class MenuService extends Service {
             where: params,
             orders: [['orderNum','desc']], 
             limit: size, 
-            offset: page, 
+            offset: start, 
         });
 
 	    return rows;
@@ -26,8 +31,14 @@ class MenuService extends Service {
             sqlString += ` and pmenuId = ${pmenuId} `;
         };
 
-        let row =  await this.app.mysql.query(sqlString);
-        return row.cnt;
+        let rows =  await this.app.mysql.query(sqlString);
+
+        let count = 0 ;
+        if (rows.length > 0){
+            count = rows[0].cnt;
+        }
+
+        return count;
     }
 
     async getMenuByPid(pmenuId){

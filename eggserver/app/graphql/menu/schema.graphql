@@ -1,0 +1,24 @@
+
+type Menu {
+  menuId: Int!
+  name: String!
+  menuKey: String!
+  pmenuId: Int!
+  orderNum:Int!
+  tourl:String!
+  tag:String!
+}
+
+type MenuList {
+  count: Int!
+  menulist: [Menu]!
+}
+
+input MenuInput {
+  name: String!
+  menuKey: String!
+  pmenuId: Int!
+  orderNum:Int!
+  tourl:String!
+  tag:String!
+}
