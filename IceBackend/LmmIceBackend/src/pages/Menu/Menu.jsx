@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SimpleFormDialog from './components/SimpleFormDialog';
-import LmmTable from './components/LmmTable';
 import LmmOperate from './components/LmmOperate'
 
 import { gql } from 'apollo-boost';
