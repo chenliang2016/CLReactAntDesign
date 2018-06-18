@@ -13,7 +13,8 @@ class UploaderController extends Controller {
     let now = new Date();
     let today = path.join(now.getFullYear().toString(), (now.getMonth() + 1).toString(), now.getDay().toString());
     let folder = path.join(this.app.config.upload.localFilePrex, today);
-    let filename = now.getTime() + '__' + name;
+    // let filename = now.getTime() + '__' + name;
+    let filename = now.getTime() + '.jpg';
 
     try {
         fs.accessSync(folder, fs.constants.W_OK);
@@ -31,7 +32,7 @@ class UploaderController extends Controller {
         console.log('copy over');    
     });  
 
-    let url = path.join(this.app.config.upload.remoteFilePrex, today) + filename;
+    let url = `${this.app.config.upload.remoteFilePrex}` + today + filename;
 
     ctx.body = {
       "status": "success",
