@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Grid, Upload, Input,TreeSelect,Icon } from '@icedesign/base';
+import { Button, Grid, Upload, Input,TreeSelect,Icon,Tag } from '@icedesign/base';
+import FoundationSymbol from 'foundation-symbol';
 
 const { CropUpload } = Upload;
 
@@ -319,6 +320,129 @@ export class LmmFormUploadImage extends Component {
           message={this.props.errorMsg}
         >
             <LmmCustomUpload />
+        </IceFormBinder>
+        <IceFormError name={this.props.attName} />
+      </Col>
+      </Row>
+    }
+
+}
+
+class CustomChooseIcon extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: props.value,
+    };
+
+    this.icons = [
+      'home',
+      'home2',
+      'menu',
+      'bangzhu',
+      'cascades',
+      'activity',
+      'qrcode',
+      'edit',
+      'coupons',
+      'repair',
+      'shopcar',
+      'search',
+      'message',
+      'notice',
+      'yonghu',
+      'shop',
+      'chart',
+      'ol-list',
+      'ul-list',
+      'task',
+      'guanbi',
+      'question',
+      'mail',
+    ];
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    // 注意在上层 FormBinder 更新 value 之后，将组件内部 value 更新
+    this.setState({
+      value: nextProps.value,
+    });
+  }
+
+  onChange = (selected,value) => {
+    if (selected){
+      this.props.onChange(value);
+    }else{
+      this.props.onChange('');
+    }
+  }
+
+  renderIcon = (type, idx) => {
+    return (
+      <div 
+      style={{
+        display: 'inline-block',
+        minWidth: '50px',
+        marginBottom: '15px',
+        cursor: 'pointer'
+      }}
+      key={idx}>
+        <Tag onSelect={(selected) => {
+          this.onChange(selected,type)}} shape="selectable" selected={this.state.value == type}>
+          <FoundationSymbol type={type} />
+        </Tag>
+        </div>
+    );
+  };
+
+  render(){
+    console.log(this.state.value);
+    return <div>
+          {this.icons.map(this.renderIcon)}
+    </div>
+  }
+}
+
+//图标选择控件
+export class LmmFormChooseIcon extends Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {
+        isMobile: false,
+      };
+    }
+
+  componentDidMount(){
+      this.enquireScreenRegister();
+  }
+  
+  enquireScreenRegister = () => {
+      const mediaCondition = 'only screen and (max-width: 720px)';
+  
+      enquireScreen((mobile) => {
+        this.setState({
+          isMobile: mobile,
+        });
+      }, mediaCondition);
+  };
+
+    render(){
+      const { isMobile } = this.state;
+      return <Row style={styles.formRow}>
+      <Col span={`${isMobile ? '6' : '3'}`}>
+        <label style={styles.formLabel}>{this.props.title}</label>
+      </Col>
+      <Col span={`${isMobile ? '18' : '16'}`}>
+        <IceFormBinder
+          name={this.props.attName}
+          required
+          message={this.props.errorMsg}
+        >
+            <CustomChooseIcon />
         </IceFormBinder>
         <IceFormError name={this.props.attName} />
       </Col>

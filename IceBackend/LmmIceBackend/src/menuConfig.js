@@ -29,22 +29,11 @@ const getAsideMenuConfig = () => {
   var menusJson = sessionStorage.getItem('menus');
   const topmenus = JSON.parse(menusJson);
 
-  let asideMenuConfig = [
-    {
-      name: '\u7528\u6237\u5217\u8868',
-      path: '/backend/users',
-      icon: 'home',
-    },
-    {
-      name: '\u89D2\u8272\u5217\u8868',
-      path: '/backend/role',
-      icon: 'home',
-    },
-  ];
+  let asideMenuConfig = []
 
   if (topmenus == null || topmenus == undefined) {
     asideMenuConfig = [];
-  } else {
+  } else{
     const getSubMenus = menu => {
       let subs = menu.subs;
       let submenus = [];
@@ -53,15 +42,16 @@ const getAsideMenuConfig = () => {
         submenus.push({
           name: sub.title,
           path: sub.to,
+          icon: menu.icon,
           children: getSubMenus(sub),
         });
       }
       return submenus;
-    };
+    }
 
     asideMenuConfig = topmenus.map(function(menu) {
       let realMenu = {
-        icon: 'home2',
+        icon: menu.icon,
         name: menu.title,
         path: menu.to,
       };
@@ -69,7 +59,6 @@ const getAsideMenuConfig = () => {
       return realMenu;
     });
   }
-
   return asideMenuConfig;
 };
 

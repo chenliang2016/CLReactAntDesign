@@ -19,6 +19,7 @@ const GET_MENUS = gql`
             menuId,
             name,
             orderNum,
+            icon,
             tourl,
           }
       }
@@ -108,6 +109,7 @@ export default class Menu extends Component {
       menuId:data.menuId,
       name:data.name,
       orderNum:data.orderNum,
+      icon:data.icon,
       tourl:data.tourl
     }
 

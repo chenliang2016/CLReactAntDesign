@@ -11,7 +11,7 @@ const { Row, Col } = Grid;
 
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
-import { LmmFormInput,LmmFormTreeSelect } from '../../../../components/LmmFormItem';
+import { LmmFormInput,LmmFormTreeSelect,LmmFormChooseIcon } from '../../../../components/LmmFormItem';
 
 const ADD = gql`
    mutation CreateMenu($menuInput: MenuInput!) {
@@ -75,7 +75,8 @@ export default class SimpleFormDialog extends Component {
           name:values.name,
           pmenuId:values.pmenuId,
           orderNum:values.orderNum,
-          tourl:values.tourl
+          tourl:values.tourl,
+          icon:values.icon,
         },
       }
 
@@ -86,6 +87,7 @@ export default class SimpleFormDialog extends Component {
             name:values.name,
             pmenuId:values.pmenuId,
             orderNum:values.orderNum,
+            icon:values.icon,
             tourl:values.tourl
           },
         }
@@ -157,6 +159,12 @@ export default class SimpleFormDialog extends Component {
                 attName="orderNum"
                 placeholder="请输入排序号"
                 errorMsg="排序号必填"
+              />
+              <LmmFormChooseIcon 
+                title='图标'
+                attName="icon"
+                placeholder="选择icon"
+                errorMsg="选择icon"
               />
             </div>
           </IceFormBinderWrapper>

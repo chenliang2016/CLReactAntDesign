@@ -30,6 +30,7 @@ const loopTreeData = (data, pid) => {
                 "title": data[i].name,
                 "key":data[i].menuKey,
                 "tag":data[i].tag,
+                "icon":data[i].icon,
                 "to":data[i].tourl};
             temp = loopTreeData(data, data[i].menuId);
             if (temp!=undefined) {
