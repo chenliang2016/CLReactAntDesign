@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.7.21)
 # Database: NewLmmFrame
-# Generation Time: 2018-06-15 03:12:50 +0000
+# Generation Time: 2018-06-20 03:08:48 +0000
 # ************************************************************
 
 
@@ -70,18 +70,19 @@ CREATE TABLE `fmenu` (
   `orderNum` int(20) DEFAULT NULL,
   `tourl` varchar(100) DEFAULT NULL,
   `tag` varchar(10) DEFAULT NULL,
+  `icon` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`menuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `fmenu` WRITE;
 /*!40000 ALTER TABLE `fmenu` DISABLE KEYS */;
 
-INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`, `tag`)
+INSERT INTO `fmenu` (`menuId`, `name`, `menuKey`, `pmenuId`, `orderNum`, `tourl`, `tag`, `icon`)
 VALUES
-	(1,'后台管理','backend',-1,2000,'/backend/users','normal'),
-	(3,'用户管理','users',1,2001,'/backend/users','normal'),
-	(5,'菜单列表','menu',1,2002,'/backend/menu','normal'),
-	(7,'角色列表','role',1,2003,'/backend/role','normal');
+	(1,'后台管理','backend',-1,2000,'/backend/users','normal','menu'),
+	(3,'用户管理','users',1,2001,'/backend/users','normal',NULL),
+	(5,'菜单列表','menu',1,2002,'/backend/menu','normal',NULL),
+	(7,'角色列表','role',1,2003,'/backend/role','normal',NULL);
 
 /*!40000 ALTER TABLE `fmenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -104,7 +105,8 @@ LOCK TABLES `frole` WRITE;
 
 INSERT INTO `frole` (`roleId`, `name`, `proleId`)
 VALUES
-	(7,'系统管理',-1);
+	(7,'系统管理',-1),
+	(13,'测试',-1);
 
 /*!40000 ALTER TABLE `frole` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -190,7 +192,9 @@ VALUES
 	(300,7,9),
 	(301,3,9),
 	(302,1,9),
-	(303,5,9);
+	(303,5,9),
+	(304,7,13),
+	(305,1,13);
 
 /*!40000 ALTER TABLE `frolemenu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -214,7 +218,8 @@ LOCK TABLES `fuser` WRITE;
 
 INSERT INTO `fuser` (`userId`, `loginName`, `loginPasw`, `name`)
 VALUES
-	(1,'admin','123','管理员');
+	(1,'admin','123','管理员'),
+	(17,'chenliang','11111','陈靓');
 
 /*!40000 ALTER TABLE `fuser` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -240,7 +245,8 @@ VALUES
 	(44,1,1),
 	(69,9,3),
 	(70,7,16),
-	(71,9,16);
+	(71,9,16),
+	(72,13,17);
 
 /*!40000 ALTER TABLE `fuserrole` ENABLE KEYS */;
 UNLOCK TABLES;
