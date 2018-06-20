@@ -23,6 +23,7 @@ module.exports = {
     }, ctx) {
         ctx.service.menu.add('fmenu',{
             name:menuInput.name,
+            icon:menuInput.icon,
             pmenuId:menuInput.pmenuId,
             orderNum:menuInput.orderNum,
             tourl:menuInput.tourl
