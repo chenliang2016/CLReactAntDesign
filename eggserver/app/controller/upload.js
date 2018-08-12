@@ -11,7 +11,7 @@ class UploaderController extends Controller {
     const name = path.basename(stream.filename);
 
     let now = new Date();
-    let today = path.join(now.getFullYear().toString(), (now.getMonth() + 1).toString(), now.getDay().toString());
+    let today = path.join(now.getFullYear().toString(), (now.getMonth() + 1).toString(), now.getDay().toString(),"/");
     let folder = path.join(this.app.config.upload.localFilePrex, today);
     // let filename = now.getTime() + '__' + name;
     let filename = now.getTime() + '.jpg';
