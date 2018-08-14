@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Upload, Input,TreeSelect,Icon,Tag } from '@icedesign/base';
+import { Button, Grid, Upload, Input,TreeSelect,Icon,Tag,DatePicker } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
 
 const { CropUpload } = Upload;
@@ -59,6 +59,52 @@ export class LmmFormInput extends Component {
       }
     
 }
+
+
+export class LmmFormDate extends Component {
+
+  constructor(props) {
+      super(props);
+      this.state = {
+        isMobile: false,
+      };
+    }
+
+  componentDidMount(){
+      this.enquireScreenRegister();
+  }
+  
+  enquireScreenRegister = () => {
+      const mediaCondition = 'only screen and (max-width: 720px)';
+  
+      enquireScreen((mobile) => {
+        this.setState({
+          isMobile: mobile,
+        });
+      }, mediaCondition);
+  };
+
+    render(){
+      const { isMobile } = this.state;
+      return <Row style={styles.formRow}>
+          <Col span={`${isMobile ? '6' : '3'}`}>
+          <label style={styles.formLabel}>{this.props.title}</label>
+          </Col>
+          <Col span={`${isMobile ? '18' : '16'}`}>
+          <IceFormBinder
+                required
+                message={this.props.errorMsg}
+              >
+                <DatePicker name={this.props.attName} />
+          </IceFormBinder>
+          <IceFormError name={this.props.attName} />
+          </Col>
+      </Row>
+    }
+  
+}
+
+
 
 export class LmmFormTreeSelect extends Component {
 
@@ -249,7 +295,7 @@ class LmmCustomUpload extends Component {
             </Button>:null
           }
           <CropUpload
-            action="/api/upload" // 该接口仅作测试使用，业务请勿使用
+            action="/api/upload" 
             preview
             previewList={[80, 60, 40]}
             minCropBoxSize={100}

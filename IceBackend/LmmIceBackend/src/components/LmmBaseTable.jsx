@@ -73,7 +73,11 @@ export default class LmmBaseTable extends Component {
               >
               {
                   this.props.columns.map(item => {
-                     return  <Table.Column  key={item.name} title={item.title} dataIndex={item.name} width={120} />
+                    if(item.cellRender != undefined){
+                      return  <Table.Column cell={item.cellRender}  key={item.name} title={item.title} dataIndex={item.name} width={120} />
+                    }else{
+                      return  <Table.Column  key={item.name} title={item.title} dataIndex={item.name} width={120} />
+                    }
                   })
               }
                 <Table.Column
