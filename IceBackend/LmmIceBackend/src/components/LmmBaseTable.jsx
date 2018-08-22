@@ -89,10 +89,13 @@ export default class LmmBaseTable extends Component {
               </Table>
           </Loading>    
           <div style={styles.pagination}>
-            <Pagination 
-            total={this.props.total}
-            current={this.props.currentPage} 
-            onChange={this.onPageChange} />
+          {this.props.nopage?
+          null:
+          <Pagination 
+          total={this.props.total}
+          current={this.props.currentPage} 
+          onChange={this.onPageChange} />
+          }
           </div>
         </IceContainer>
       </div>
