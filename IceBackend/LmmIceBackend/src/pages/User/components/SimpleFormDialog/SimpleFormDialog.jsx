@@ -7,6 +7,8 @@ import { enquireScreen } from 'enquire-js';
 
 import { LmmFormInput } from '../../../../components/LmmFormItem';
 
+import { LmmQiniuUploadImage } from '../../../../components/LmmQiniuUpload';
+
 import { gql } from 'apollo-boost';
 import { Mutation } from 'react-apollo';
 
@@ -145,6 +147,12 @@ export default class SimpleFormDialog extends Component {
                 attName="loginPasw"
                 placeholder="请输入密码"
                 errorMsg="请输入密码"
+              />
+              <LmmQiniuUploadImage 
+                title='七牛'
+                attName="qiniu"
+                placeholder="请输入七牛"
+                errorMsg="请输入七牛"
               />
             </div>
           </IceFormBinderWrapper>

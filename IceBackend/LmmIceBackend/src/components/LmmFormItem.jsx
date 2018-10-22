@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Upload, Input,TreeSelect,Icon,Tag,DatePicker } from '@icedesign/base';
+import { Button, Grid, Upload, Input,TreeSelect,Icon,Tag,DatePicker,Dialog } from '@icedesign/base';
 import FoundationSymbol from 'foundation-symbol';
 
 const { CropUpload } = Upload;
